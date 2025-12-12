@@ -8,6 +8,9 @@ import { PatternChart } from "@/components/dashboard/PatternChart";
 import { Watchlist } from "@/components/dashboard/Watchlist";
 import { AITradingPanel } from "@/components/dashboard/AITradingPanel";
 import { RecentTrades } from "@/components/dashboard/RecentTrades";
+import { PortfolioTracking } from "@/components/dashboard/PortfolioTracking";
+import { TradesHistory } from "@/components/dashboard/TradesHistory";
+import { PriceAlerts } from "@/components/dashboard/PriceAlerts";
 import { Loader2 } from "lucide-react";
 
 const Dashboard = () => {
@@ -41,16 +44,27 @@ const Dashboard = () => {
       
       <main className="container mx-auto px-4 py-6 space-y-6">
         <MarketOverview />
-        <PortfolioStats />
         
+        {/* Portfolio Overview Row */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <PortfolioStats />
+          </div>
+          <div>
+            <PortfolioTracking />
+          </div>
+        </div>
+        
+        {/* Main Content Grid */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
             <PatternChart />
-            <RecentTrades />
+            <TradesHistory />
           </div>
           
           <div className="space-y-6">
             <AITradingPanel />
+            <PriceAlerts />
             <Watchlist />
           </div>
         </div>

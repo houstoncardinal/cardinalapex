@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Header } from "@/components/dashboard/Header";
 import { PortfolioStats } from "@/components/dashboard/PortfolioCard";
 import { MarketOverview } from "@/components/dashboard/MarketOverview";
-import { PriceChart } from "@/components/dashboard/PriceChart";
+import { PatternChart } from "@/components/dashboard/PatternChart";
 import { Watchlist } from "@/components/dashboard/Watchlist";
 import { AITradingPanel } from "@/components/dashboard/AITradingPanel";
 import { RecentTrades } from "@/components/dashboard/RecentTrades";
@@ -45,7 +45,7 @@ const Dashboard = () => {
         
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
-            <PriceChart />
+            <PatternChart />
             <RecentTrades />
           </div>
           

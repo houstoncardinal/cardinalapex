@@ -1,1 +1,10 @@
 project_id = "fmacblpdbkeaijbshyeq"
+
+[api]
+enabled = true
+
+[functions.ai-trade-analysis]
+verify_jwt = false
+
+[functions.execute-trade]
+verify_jwt = true

@@ -18,25 +18,42 @@ serve(async (req) => {
 
     const { symbol, market, action } = await req.json();
 
-    const systemPrompt = `You are an aggressive AI trading analyst for TradeFlow, a revolutionary trading platform. 
-You analyze market conditions and provide bold, actionable trading insights.
-Your personality: Confident, data-driven, and focused on maximum profit potential.
-Always be specific with price targets, entry/exit points, and risk levels.
-Format responses in a clear, punchy style. Use percentages and specific numbers.
+    const systemPrompt = `You are an elite AI trading analyst for TradeFlow, specializing in detecting billion-dollar chart patterns.
+You are a master of technical analysis with expertise in:
+- Head & Shoulders (regular and inverse) - reversal signals
+- Double/Triple Tops & Bottoms - major reversal patterns
+- Cup & Handle - powerful bullish continuation
+- Bull/Bear Flags & Pennants - momentum continuation
+- Ascending/Descending Triangles - breakout setups
+- Wedges (rising/falling) - trend exhaustion signals
+- Elliott Wave patterns - market cycle prediction
+- Fibonacci retracements & extensions - key price levels
+- Volume profile analysis - smart money detection
+- Wyckoff accumulation/distribution - institutional activity
+- Order flow imbalances - whale movement detection
+
+Your analysis style: AGGRESSIVE, PRECISE, PROFIT-MAXIMIZING.
+Always identify the most profitable pattern currently forming.
+Give exact entry/exit levels with tight risk management.
 Current market: ${market === 'crypto' ? 'Cryptocurrency' : 'Stock Market'}`;
 
     const userPrompt = action === 'analyze' 
-      ? `Analyze ${symbol} for aggressive trading opportunities. Provide:
-1. Current market sentiment (bullish/bearish/neutral with confidence %)
-2. Recommended action (BUY/SELL/HOLD)
-3. Entry price target
-4. Take profit target (aggressive)
-5. Stop loss recommendation
-6. Risk/reward ratio
-7. Key factors driving this analysis
-Keep it concise but powerful.`
-      : `Generate a quick trading signal for ${symbol}. 
-Give me: Direction, confidence level, and one sentence reason.`;
+      ? `Perform deep pattern analysis on ${symbol} for maximum profit extraction:
+
+1. **PATTERN DETECTED**: Identify the most significant chart pattern forming (be specific: "Inverse Head & Shoulders on 4H chart")
+2. **PATTERN COMPLETION**: How close to completion? (e.g., "Right shoulder forming, 78% complete")
+3. **BREAKOUT LEVEL**: Exact price where pattern confirms
+4. **PROFIT TARGET**: Calculate using pattern measurement rules (e.g., "Pattern height projects to $X")
+5. **ENTRY STRATEGY**: Aggressive entry point with reasoning
+6. **STOP LOSS**: Tight invalidation level
+7. **RISK/REWARD RATIO**: Must be minimum 3:1 for aggressive plays
+8. **VOLUME CONFIRMATION**: Is volume supporting the pattern?
+9. **SMART MONEY SIGNALS**: Any whale accumulation/distribution detected?
+10. **CONFIDENCE SCORE**: 0-100% based on pattern reliability
+
+Format: Be bold. Be specific. Focus on MASSIVE profit potential.`
+      : `Quick pattern scan for ${symbol}:
+Pattern type, direction, confidence %, and projected move size.`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",

@@ -1,17 +1,27 @@
-import { Bell, Search, Settings, Wallet } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { Bell, Search, Settings, Wallet, LogOut, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Header = () => {
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
+
   return (
     <header className="glass sticky top-0 z-50 px-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
-            <span className="text-xl font-bold text-primary-foreground">T</span>
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20">
+            <BarChart3 className="h-6 w-6 text-primary" />
           </div>
           <div>
             <h1 className="text-xl font-bold text-foreground">TradeFlow</h1>
-            <p className="text-xs text-muted-foreground">Smart Trading</p>
+            <p className="text-xs text-muted-foreground">AI Trading</p>
           </div>
         </div>
 
@@ -22,9 +32,6 @@ export const Header = () => {
             placeholder="Search stocks, crypto..."
             className="bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none w-64"
           />
-          <kbd className="hidden lg:inline-flex h-5 items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-            ⌘K
-          </kbd>
         </div>
 
         <div className="flex items-center gap-2">
@@ -37,7 +44,10 @@ export const Header = () => {
           </Button>
           <Button variant="accent" className="hidden sm:flex gap-2">
             <Wallet className="h-4 w-4" />
-            <span>$124,532.89</span>
+            <span>$10,000.00</span>
+          </Button>
+          <Button variant="glass" size="icon" onClick={handleSignOut}>
+            <LogOut className="h-4 w-4" />
           </Button>
         </div>
       </div>

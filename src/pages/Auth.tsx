@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { BarChart3, Mail, Lock, User, ArrowRight, Loader2 } from "lucide-react";
+import { BarChart3, Mail, Lock, User, ArrowRight, Loader2, UserCircle, Sparkles } from "lucide-react";
 import { z } from "zod";
 
 const authSchema = z.object({
@@ -20,8 +20,9 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [guestLoading, setGuestLoading] = useState(false);
   
-  const { signIn, signUp, user } = useAuth();
+  const { signIn, signUp, signInAsGuest, user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -66,7 +67,7 @@ const Auth = () => {
         } else {
           toast({
             title: "Welcome to TradeFlow!",
-            description: "Your AI trading bots are ready. Let's make some money! 🚀",
+            description: "Your AI trading bots are ready. Let's make some money!",
           });
         }
       } else {
@@ -90,13 +91,40 @@ const Auth = () => {
     }
   };
 
+  const handleGuestSignIn = async () => {
+    setGuestLoading(true);
+    try {
+      const { error } = await signInAsGuest();
+      if (error) {
+        toast({
+          title: "Guest sign-in failed",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Welcome, Guest Trader!",
+          description: "Explore the platform with $10,000 demo balance. Sign up anytime to save your progress.",
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "Failed to sign in as guest. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setGuestLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background flex">
       {/* Left Panel - Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-secondary/30 items-center justify-center p-12 relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent/20 rounded-full blur-3xl" />
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl animate-pulse-glow" />
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent/20 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1s" }} />
         </div>
         
         <div className="relative z-10 max-w-md">
@@ -161,7 +189,36 @@ const Auth = () => {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Guest Sign-In Button */}
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            className="w-full h-14 border-2 border-dashed border-primary/40 hover:border-primary hover:bg-primary/5 transition-all group"
+            onClick={handleGuestSignIn}
+            disabled={guestLoading}
+          >
+            {guestLoading ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              <>
+                <UserCircle className="h-5 w-5 mr-2 text-primary group-hover:scale-110 transition-transform" />
+                <span className="text-foreground">Continue as Guest</span>
+                <Sparkles className="h-4 w-4 ml-2 text-primary" />
+              </>
+            )}
+          </Button>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-4 text-muted-foreground">Or continue with email</span>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
             {isSignUp && (
               <div className="space-y-2">
                 <Label htmlFor="fullName" className="text-foreground">Full Name</Label>

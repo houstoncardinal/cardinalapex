@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Header } from "@/components/dashboard/Header";
+import { MobileToolbar } from "@/components/dashboard/MobileToolbar";
 import { PortfolioStats } from "@/components/dashboard/PortfolioCard";
 import { MarketOverview } from "@/components/dashboard/MarketOverview";
 import { PatternChart } from "@/components/dashboard/PatternChart";
@@ -40,24 +41,25 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       <Header />
       
-      <main className="container mx-auto px-4 py-6 space-y-6">
+      <main className="container mx-auto px-3 sm:px-4 py-4 md:py-6 space-y-4 md:space-y-6 max-w-[1800px]">
         {/* Guest Banner */}
         {isGuest && (
           <Alert className="border-warning/50 bg-warning/10">
             <AlertCircle className="h-4 w-4 text-warning" />
-            <AlertDescription className="text-foreground">
-              You're trading as a guest. <a href="/auth?mode=signup" className="text-primary font-medium hover:underline">Create an account</a> to save your progress and unlock all features.
+            <AlertDescription className="text-foreground text-sm">
+              You're trading as a guest. <a href="/auth?mode=signup" className="text-primary font-medium hover:underline">Create an account</a> to save your progress.
             </AlertDescription>
           </Alert>
         )}
 
+        {/* Market Overview - Full Width */}
         <MarketOverview />
         
         {/* Portfolio Overview Row */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <PortfolioStats />
           </div>
@@ -66,21 +68,40 @@ const Dashboard = () => {
           </div>
         </div>
         
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2 space-y-6">
+        {/* Main Content Grid - Responsive */}
+        <div className="grid grid-cols-1 gap-4 md:gap-6 xl:grid-cols-3">
+          {/* Main Trading Area */}
+          <div className="xl:col-span-2 space-y-4 md:space-y-6">
             <PatternChart />
             <LiveTradingActivity />
-            <TradesHistory />
+            
+            {/* Trades History - Hidden on mobile, shown in tab */}
+            <div className="hidden sm:block">
+              <TradesHistory />
+            </div>
           </div>
           
-          <div className="space-y-6">
+          {/* Sidebar - Collapses on mobile */}
+          <div className="space-y-4 md:space-y-6">
+            {/* AI Trading Panel - Priority on all screens */}
             <AITradingPanel />
-            <PriceAlerts />
-            <Watchlist />
+            
+            {/* Price Alerts & Watchlist - Stack on tablet, side by side on large screens */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-4 md:gap-6">
+              <PriceAlerts />
+              <Watchlist />
+            </div>
           </div>
         </div>
+        
+        {/* Mobile Trades History */}
+        <div className="sm:hidden">
+          <TradesHistory />
+        </div>
       </main>
+      
+      {/* Mobile Bottom Toolbar */}
+      <MobileToolbar />
     </div>
   );
 };

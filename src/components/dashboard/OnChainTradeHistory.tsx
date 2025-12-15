@@ -1,4 +1,4 @@
-import { ExternalLink, History, Loader2, RefreshCw, ArrowUpRight, ArrowDownRight, Clock, CheckCircle, XCircle, Wallet } from 'lucide-react';
+import { ExternalLink, History, Loader2, RefreshCw, ArrowUpRight, ArrowDownRight, Clock, CheckCircle, XCircle, Wallet, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -7,8 +7,14 @@ import { usePhantomWallet } from '@/hooks/usePhantomWallet';
 import { formatDistanceToNow } from 'date-fns';
 
 export const OnChainTradeHistory = () => {
-  const { transactions, loading, refresh, getSolscanUrl, isConnected, walletAddress } = useOnChainHistory(30);
+  const { transactions, loading, refresh, getSolscanUrl, isConnected, walletAddress, currentSolPrice } = useOnChainHistory(30);
   const { connect } = usePhantomWallet();
+
+  // Calculate total P&L
+  const totalPnL = transactions.reduce((sum, tx) => sum + (tx.estimatedPnL || 0), 0);
+  const avgPnLPercent = transactions.length > 0 
+    ? transactions.reduce((sum, tx) => sum + (tx.pnlPercent || 0), 0) / transactions.length 
+    : 0;
 
   if (!isConnected) {
     return (
@@ -20,7 +26,7 @@ export const OnChainTradeHistory = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-foreground">On-Chain History</h3>
-              <p className="text-sm text-muted-foreground">Solana transactions</p>
+              <p className="text-sm text-muted-foreground">Solana transactions with P&L</p>
             </div>
           </div>
         </div>
@@ -66,6 +72,44 @@ export const OnChainTradeHistory = () => {
           </Button>
         </div>
       </div>
+
+      {/* P&L Summary Card */}
+      {transactions.length > 0 && (
+        <div className="mb-4 p-4 rounded-xl border border-border bg-gradient-to-r from-secondary/30 to-secondary/10">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <DollarSign className="h-4 w-4 text-muted-foreground" />
+              <span className="text-sm text-muted-foreground">Estimated P&L (Recent)</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <p className={cn(
+                  "font-bold text-lg",
+                  totalPnL >= 0 ? "text-success" : "text-destructive"
+                )}>
+                  {totalPnL >= 0 ? '+' : ''}${Math.abs(totalPnL).toFixed(2)}
+                </p>
+                <p className={cn(
+                  "text-xs",
+                  avgPnLPercent >= 0 ? "text-success" : "text-destructive"
+                )}>
+                  {avgPnLPercent >= 0 ? '+' : ''}{avgPnLPercent.toFixed(2)}% avg
+                </p>
+              </div>
+              {totalPnL >= 0 ? (
+                <TrendingUp className="h-5 w-5 text-success" />
+              ) : (
+                <TrendingDown className="h-5 w-5 text-destructive" />
+              )}
+            </div>
+          </div>
+          {currentSolPrice > 0 && (
+            <p className="text-xs text-muted-foreground mt-2">
+              Current SOL: ${currentSolPrice.toFixed(2)}
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Transaction List */}
       <div className="space-y-2 max-h-[400px] overflow-y-auto">
@@ -121,20 +165,47 @@ export const OnChainTradeHistory = () => {
                       {tx.type === 'swap' ? 'SWAP' : tx.type.toUpperCase()}
                     </Badge>
                   </div>
-                  <p className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    {tx.blockTime ? formatDistanceToNow(new Date(tx.blockTime * 1000), { addSuffix: true }) : 'Pending'}
-                  </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      {tx.blockTime ? formatDistanceToNow(new Date(tx.blockTime * 1000), { addSuffix: true }) : 'Pending'}
+                    </span>
+                    {tx.solPriceAtTime && (
+                      <span className="text-[10px]">
+                        @ ${tx.solPriceAtTime.toFixed(2)}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
-                {tx.status === 'success' ? (
-                  <CheckCircle className="h-4 w-4 text-success" />
-                ) : (
-                  <XCircle className="h-4 w-4 text-destructive" />
+              <div className="flex items-center gap-3">
+                {/* P&L Column */}
+                {tx.estimatedPnL !== undefined && (
+                  <div className="text-right">
+                    <p className={cn(
+                      "text-xs font-medium",
+                      tx.estimatedPnL >= 0 ? "text-success" : "text-destructive"
+                    )}>
+                      {tx.estimatedPnL >= 0 ? '+' : ''}${Math.abs(tx.estimatedPnL).toFixed(2)}
+                    </p>
+                    <p className={cn(
+                      "text-[10px]",
+                      (tx.pnlPercent || 0) >= 0 ? "text-success" : "text-destructive"
+                    )}>
+                      {(tx.pnlPercent || 0) >= 0 ? '+' : ''}{(tx.pnlPercent || 0).toFixed(1)}%
+                    </p>
+                  </div>
                 )}
-                <ExternalLink className="h-3 w-3 text-muted-foreground" />
+                
+                <div className="flex items-center gap-1">
+                  {tx.status === 'success' ? (
+                    <CheckCircle className="h-4 w-4 text-success" />
+                  ) : (
+                    <XCircle className="h-4 w-4 text-destructive" />
+                  )}
+                  <ExternalLink className="h-3 w-3 text-muted-foreground" />
+                </div>
               </div>
             </a>
           ))

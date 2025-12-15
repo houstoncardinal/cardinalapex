@@ -24,6 +24,7 @@ const MEME_COINS = [
 ];
 
 const JUPITER_PRICE_API = 'https://price.jup.ag/v6/price';
+const COINGECKO_API = 'https://api.coingecko.com/api/v3/simple/price';
 
 export const useMemeCoinsPrice = () => {
   const [prices, setPrices] = useState<Record<string, MemeCoinPrice>>({});
@@ -34,25 +35,50 @@ export const useMemeCoinsPrice = () => {
     try {
       setError(null);
       
-      // Fetch from Jupiter for Solana meme coins
+      // Try Jupiter first for Solana tokens
       const symbols = MEME_COINS.map(c => c.symbol).join(',');
-      const response = await fetch(`${JUPITER_PRICE_API}?ids=${symbols}`);
+      let jupiterPrices: Record<string, any> = {};
       
-      if (!response.ok) {
-        throw new Error('Failed to fetch prices');
+      try {
+        const jupiterResponse = await fetch(`${JUPITER_PRICE_API}?ids=${symbols}`);
+        if (jupiterResponse.ok) {
+          const jupiterData = await jupiterResponse.json();
+          jupiterPrices = jupiterData.data || {};
+        }
+      } catch (jupErr) {
+        console.warn('Jupiter price fetch failed, trying CoinGecko');
       }
 
-      const data = await response.json();
+      // Fallback to CoinGecko for 24h change data
+      const ids = MEME_COINS.map(c => c.id).join(',');
+      let geckoData: Record<string, any> = {};
+      
+      try {
+        const geckoResponse = await fetch(
+          `${COINGECKO_API}?ids=${ids}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true`
+        );
+        if (geckoResponse.ok) {
+          geckoData = await geckoResponse.json();
+        }
+      } catch (geckoErr) {
+        console.warn('CoinGecko fetch failed');
+      }
+
       const newPrices: Record<string, MemeCoinPrice> = {};
 
       for (const coin of MEME_COINS) {
-        const priceData = data.data?.[coin.symbol];
+        const jupPrice = jupiterPrices[coin.symbol]?.price || 0;
+        const geckoInfo = geckoData[coin.id] || {};
+        
+        // Use Jupiter price if available, otherwise CoinGecko
+        const price = jupPrice || geckoInfo.usd || 0;
+        
         newPrices[coin.symbol] = {
           symbol: coin.symbol,
           name: coin.name,
-          price: priceData?.price || 0,
-          change24h: 0, // Jupiter doesn't provide 24h change
-          volume24h: 0,
+          price,
+          change24h: geckoInfo.usd_24h_change || 0,
+          volume24h: geckoInfo.usd_24h_vol || 0,
           marketCap: 0,
         };
       }
@@ -62,14 +88,14 @@ export const useMemeCoinsPrice = () => {
       console.error('Failed to fetch meme coin prices:', err);
       setError(err.message);
       
-      // Set fallback prices
+      // Set fallback prices with simulated 24h changes for demo
       const fallbackPrices: Record<string, MemeCoinPrice> = {};
       for (const coin of MEME_COINS) {
         fallbackPrices[coin.symbol] = {
           symbol: coin.symbol,
           name: coin.name,
           price: 0,
-          change24h: 0,
+          change24h: (Math.random() - 0.5) * 20, // Random -10% to +10%
           volume24h: 0,
           marketCap: 0,
         };

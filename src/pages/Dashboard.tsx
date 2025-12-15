@@ -12,6 +12,8 @@ import { PortfolioTracking } from "@/components/dashboard/PortfolioTracking";
 import { TradesHistory } from "@/components/dashboard/TradesHistory";
 import { OnChainTradeHistory } from "@/components/dashboard/OnChainTradeHistory";
 import { WalletPortfolio } from "@/components/dashboard/WalletPortfolio";
+import { MemeCoinTicker } from "@/components/dashboard/MemeCoinTicker";
+import { QuickSwap } from "@/components/dashboard/QuickSwap";
 import { PriceAlerts } from "@/components/dashboard/PriceAlerts";
 import { LiveTradingActivity } from "@/components/dashboard/LiveTradingActivity";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
@@ -59,16 +61,22 @@ const Dashboard = () => {
           </Alert>
         )}
 
+        {/* Meme Coin Ticker - Full Width */}
+        <MemeCoinTicker />
+
         {/* Trading Robots - Connect Wallet & Choose Robots */}
         <TradingRobots />
 
         {/* Market Overview - Full Width */}
         <MarketOverview />
         
-        {/* Portfolio Overview Row */}
-        <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-3">
+        {/* Portfolio & Quick Swap Row */}
+        <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-4">
           <div className="lg:col-span-1">
             <WalletPortfolio />
+          </div>
+          <div className="lg:col-span-1">
+            <QuickSwap />
           </div>
           <div className="lg:col-span-1">
             <PortfolioStats />
@@ -85,7 +93,7 @@ const Dashboard = () => {
             <PatternChart />
             <LiveTradingActivity />
             
-            {/* On-Chain Trade History - Solscan links */}
+            {/* On-Chain Trade History - Solscan links with P&L */}
             <OnChainTradeHistory />
             
             {/* Trades History - Hidden on mobile, shown in tab */}

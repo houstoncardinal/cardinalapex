@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Header } from "@/components/dashboard/Header";
 import { MobileToolbar } from "@/components/dashboard/MobileToolbar";
 import { PortfolioStats } from "@/components/dashboard/PortfolioCard";
@@ -23,6 +24,7 @@ import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+
 const Dashboard = () => {
   const { user, loading, isGuest } = useAuth();
   const navigate = useNavigate();
@@ -64,27 +66,41 @@ const Dashboard = () => {
         )}
 
         {/* Meme Coin Ticker - Full Width */}
-        <MemeCoinTicker />
+        <ErrorBoundary fallbackMessage="Failed to load meme coin ticker">
+          <MemeCoinTicker />
+        </ErrorBoundary>
 
         {/* Trading Robots - Connect Wallet & Choose Robots */}
-        <TradingRobots />
+        <ErrorBoundary fallbackMessage="Failed to load trading robots">
+          <TradingRobots />
+        </ErrorBoundary>
 
         {/* Market Overview - Full Width */}
-        <MarketOverview />
+        <ErrorBoundary fallbackMessage="Failed to load market overview">
+          <MarketOverview />
+        </ErrorBoundary>
         
         {/* Portfolio & Quick Swap Row */}
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-4">
           <div className="lg:col-span-1">
-            <WalletPortfolio />
+            <ErrorBoundary fallbackMessage="Failed to load wallet portfolio">
+              <WalletPortfolio />
+            </ErrorBoundary>
           </div>
           <div className="lg:col-span-1">
-            <QuickSwap />
+            <ErrorBoundary fallbackMessage="Failed to load quick swap">
+              <QuickSwap />
+            </ErrorBoundary>
           </div>
           <div className="lg:col-span-1">
-            <PortfolioStats />
+            <ErrorBoundary fallbackMessage="Failed to load portfolio stats">
+              <PortfolioStats />
+            </ErrorBoundary>
           </div>
           <div>
-            <PortfolioTracking />
+            <ErrorBoundary fallbackMessage="Failed to load portfolio tracking">
+              <PortfolioTracking />
+            </ErrorBoundary>
           </div>
         </div>
         
@@ -92,21 +108,33 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 gap-4 md:gap-6 xl:grid-cols-3">
           {/* Main Trading Area */}
           <div className="xl:col-span-2 space-y-4 md:space-y-6">
-            <PatternChart />
-            <LiveTradingActivity />
+            <ErrorBoundary fallbackMessage="Failed to load pattern chart">
+              <PatternChart />
+            </ErrorBoundary>
+            <ErrorBoundary fallbackMessage="Failed to load live trading activity">
+              <LiveTradingActivity />
+            </ErrorBoundary>
             
             {/* P&L History Chart */}
-            <PortfolioPnLChart />
+            <ErrorBoundary fallbackMessage="Failed to load P&L chart">
+              <PortfolioPnLChart />
+            </ErrorBoundary>
             
             {/* Trading Analytics Dashboard */}
-            <TradingAnalytics />
+            <ErrorBoundary fallbackMessage="Failed to load trading analytics">
+              <TradingAnalytics />
+            </ErrorBoundary>
             
             {/* On-Chain Trade History - Solscan links with P&L */}
-            <OnChainTradeHistory />
+            <ErrorBoundary fallbackMessage="Failed to load on-chain trade history">
+              <OnChainTradeHistory />
+            </ErrorBoundary>
             
             {/* Trades History - Hidden on mobile, shown in tab */}
             <div className="hidden sm:block">
-              <TradesHistory />
+              <ErrorBoundary fallbackMessage="Failed to load trades history">
+                <TradesHistory />
+              </ErrorBoundary>
             </div>
           </div>
           
@@ -114,26 +142,38 @@ const Dashboard = () => {
           <div className="space-y-4 md:space-y-6">
             {/* AI Trading Assistant - New GPT-powered chat */}
             <div className="h-[500px]">
-              <TradingAssistant />
+              <ErrorBoundary fallbackMessage="Failed to load trading assistant">
+                <TradingAssistant />
+              </ErrorBoundary>
             </div>
             
             {/* AI Trading Panel - Priority on all screens */}
-            <AITradingPanel />
+            <ErrorBoundary fallbackMessage="Failed to load AI trading panel">
+              <AITradingPanel />
+            </ErrorBoundary>
             
             {/* AI Portfolio Rebalancing */}
-            <PortfolioRebalancing />
+            <ErrorBoundary fallbackMessage="Failed to load portfolio rebalancing">
+              <PortfolioRebalancing />
+            </ErrorBoundary>
             
             {/* Price Alerts & Watchlist - Stack on tablet, side by side on large screens */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-4 md:gap-6">
-              <PriceAlerts />
-              <Watchlist />
+              <ErrorBoundary fallbackMessage="Failed to load price alerts">
+                <PriceAlerts />
+              </ErrorBoundary>
+              <ErrorBoundary fallbackMessage="Failed to load watchlist">
+                <Watchlist />
+              </ErrorBoundary>
             </div>
           </div>
         </div>
         
         {/* Mobile Trades History */}
         <div className="sm:hidden">
-          <TradesHistory />
+          <ErrorBoundary fallbackMessage="Failed to load trades history">
+            <TradesHistory />
+          </ErrorBoundary>
         </div>
       </main>
       

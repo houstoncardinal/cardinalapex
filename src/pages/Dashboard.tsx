@@ -36,6 +36,7 @@ import { NewsFeed } from "@/components/dashboard/NewsFeed";
 import { GasTracker } from "@/components/dashboard/GasTracker";
 import { PortfolioAlerts } from "@/components/dashboard/PortfolioAlerts";
 import { PricePrediction } from "@/components/dashboard/PricePrediction";
+import { AutoTradeScheduler } from "@/components/dashboard/AutoTradeScheduler";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -242,6 +243,11 @@ const Dashboard = () => {
             {/* Backtesting */}
             <ErrorBoundary fallbackMessage="Failed to load backtesting">
               <Backtesting />
+            </ErrorBoundary>
+            
+            {/* Auto-Trade Scheduler */}
+            <ErrorBoundary fallbackMessage="Failed to load auto-trade scheduler">
+              <AutoTradeScheduler />
             </ErrorBoundary>
             
             {/* Social Leaderboard */}

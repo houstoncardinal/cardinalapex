@@ -11,3 +11,6 @@ verify_jwt = true
 
 [functions.trading-assistant]
 verify_jwt = false
+
+[functions.portfolio-rebalance]
+verify_jwt = false

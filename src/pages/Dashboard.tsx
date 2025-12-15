@@ -17,11 +17,12 @@ import { QuickSwap } from "@/components/dashboard/QuickSwap";
 import { PriceAlerts } from "@/components/dashboard/PriceAlerts";
 import { LiveTradingActivity } from "@/components/dashboard/LiveTradingActivity";
 import { PortfolioPnLChart } from "@/components/dashboard/PortfolioPnLChart";
+import { TradingAnalytics } from "@/components/dashboard/TradingAnalytics";
+import { PortfolioRebalancing } from "@/components/dashboard/PortfolioRebalancing";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-
 const Dashboard = () => {
   const { user, loading, isGuest } = useAuth();
   const navigate = useNavigate();
@@ -97,6 +98,9 @@ const Dashboard = () => {
             {/* P&L History Chart */}
             <PortfolioPnLChart />
             
+            {/* Trading Analytics Dashboard */}
+            <TradingAnalytics />
+            
             {/* On-Chain Trade History - Solscan links with P&L */}
             <OnChainTradeHistory />
             
@@ -115,6 +119,9 @@ const Dashboard = () => {
             
             {/* AI Trading Panel - Priority on all screens */}
             <AITradingPanel />
+            
+            {/* AI Portfolio Rebalancing */}
+            <PortfolioRebalancing />
             
             {/* Price Alerts & Watchlist - Stack on tablet, side by side on large screens */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-4 md:gap-6">

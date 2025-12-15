@@ -43,6 +43,8 @@ import { MultiWalletManager } from "@/components/dashboard/MultiWalletManager";
 import { AITradeSuggestions } from "@/components/dashboard/AITradeSuggestions";
 import { TradingChatRoom } from "@/components/dashboard/TradingChatRoom";
 import { ArbitrageScanner } from "@/components/dashboard/ArbitrageScanner";
+import { PortfolioRiskAnalyzer } from "@/components/dashboard/PortfolioRiskAnalyzer";
+import { LimitOrderManager } from "@/components/dashboard/LimitOrderManager";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -244,6 +246,16 @@ const Dashboard = () => {
             {/* Arbitrage Scanner */}
             <ErrorBoundary fallbackMessage="Failed to load arbitrage scanner">
               <ArbitrageScanner />
+            </ErrorBoundary>
+            
+            {/* Portfolio Risk Analyzer */}
+            <ErrorBoundary fallbackMessage="Failed to load portfolio risk analyzer">
+              <PortfolioRiskAnalyzer />
+            </ErrorBoundary>
+            
+            {/* Limit Order Manager */}
+            <ErrorBoundary fallbackMessage="Failed to load limit orders">
+              <LimitOrderManager />
             </ErrorBoundary>
             
             {/* Liquidity Pool Tracking */}

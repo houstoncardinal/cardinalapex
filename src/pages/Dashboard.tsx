@@ -48,6 +48,9 @@ import { LimitOrderManager } from "@/components/dashboard/LimitOrderManager";
 import { AdvancedOrders } from "@/components/dashboard/AdvancedOrders";
 import { CorrelationMatrix } from "@/components/dashboard/CorrelationMatrix";
 import { StopLossTakeProfit } from "@/components/dashboard/StopLossTakeProfit";
+import { PortfolioHeatMap } from "@/components/dashboard/PortfolioHeatMap";
+import { TradingSignals } from "@/components/dashboard/TradingSignals";
+import { PositionSizer } from "@/components/dashboard/PositionSizer";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -274,6 +277,21 @@ const Dashboard = () => {
             {/* Stop-Loss / Take-Profit */}
             <ErrorBoundary fallbackMessage="Failed to load stop-loss/take-profit">
               <StopLossTakeProfit />
+            </ErrorBoundary>
+            
+            {/* Portfolio Heat Map */}
+            <ErrorBoundary fallbackMessage="Failed to load portfolio heat map">
+              <PortfolioHeatMap />
+            </ErrorBoundary>
+            
+            {/* Trading Signals */}
+            <ErrorBoundary fallbackMessage="Failed to load trading signals">
+              <TradingSignals />
+            </ErrorBoundary>
+            
+            {/* Position Sizer */}
+            <ErrorBoundary fallbackMessage="Failed to load position sizer">
+              <PositionSizer />
             </ErrorBoundary>
             
             {/* Liquidity Pool Tracking */}

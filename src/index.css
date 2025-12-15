@@ -172,4 +172,22 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* Infinite ticker animation */
+  .animate-ticker {
+    animation: ticker 60s linear infinite;
+  }
+
+  .animate-ticker:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes ticker {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
 }

@@ -10,6 +10,8 @@ import { Watchlist } from "@/components/dashboard/Watchlist";
 import { AITradingPanel } from "@/components/dashboard/AITradingPanel";
 import { PortfolioTracking } from "@/components/dashboard/PortfolioTracking";
 import { TradesHistory } from "@/components/dashboard/TradesHistory";
+import { OnChainTradeHistory } from "@/components/dashboard/OnChainTradeHistory";
+import { WalletPortfolio } from "@/components/dashboard/WalletPortfolio";
 import { PriceAlerts } from "@/components/dashboard/PriceAlerts";
 import { LiveTradingActivity } from "@/components/dashboard/LiveTradingActivity";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
@@ -65,7 +67,10 @@ const Dashboard = () => {
         
         {/* Portfolio Overview Row */}
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
+            <WalletPortfolio />
+          </div>
+          <div className="lg:col-span-1">
             <PortfolioStats />
           </div>
           <div>
@@ -79,6 +84,9 @@ const Dashboard = () => {
           <div className="xl:col-span-2 space-y-4 md:space-y-6">
             <PatternChart />
             <LiveTradingActivity />
+            
+            {/* On-Chain Trade History - Solscan links */}
+            <OnChainTradeHistory />
             
             {/* Trades History - Hidden on mobile, shown in tab */}
             <div className="hidden sm:block">

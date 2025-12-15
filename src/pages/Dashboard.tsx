@@ -30,6 +30,9 @@ import { Backtesting } from "@/components/dashboard/Backtesting";
 import { SocialLeaderboard } from "@/components/dashboard/SocialLeaderboard";
 import { WhaleTracking } from "@/components/dashboard/WhaleTracking";
 import { SentimentAnalysis } from "@/components/dashboard/SentimentAnalysis";
+import { TokenScanner } from "@/components/dashboard/TokenScanner";
+import { LiquidityTracking } from "@/components/dashboard/LiquidityTracking";
+import { NewsFeed } from "@/components/dashboard/NewsFeed";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -181,6 +184,21 @@ const Dashboard = () => {
             {/* AI Trading Panel - Priority on all screens */}
             <ErrorBoundary fallbackMessage="Failed to load AI trading panel">
               <AITradingPanel />
+            </ErrorBoundary>
+            
+            {/* Token Scanner */}
+            <ErrorBoundary fallbackMessage="Failed to load token scanner">
+              <TokenScanner />
+            </ErrorBoundary>
+            
+            {/* Liquidity Pool Tracking */}
+            <ErrorBoundary fallbackMessage="Failed to load liquidity tracking">
+              <LiquidityTracking />
+            </ErrorBoundary>
+            
+            {/* News Feed */}
+            <ErrorBoundary fallbackMessage="Failed to load news feed">
+              <NewsFeed />
             </ErrorBoundary>
             
             {/* AI Portfolio Rebalancing */}

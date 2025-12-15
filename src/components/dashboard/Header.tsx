@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { Bell, Search, Settings, Wallet, LogOut, BarChart3, TrendingUp, Bot, PieChart, Clock } from "lucide-react";
+import { Bell, Search, Settings, LogOut, BarChart3, TrendingUp, Bot, PieChart, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MobileHeader } from "./MobileHeader";
+import WalletConnect from "@/components/wallet/WalletConnect";
 
 export const Header = () => {
   const { signOut, isGuest } = useAuth();
@@ -77,14 +78,8 @@ export const Header = () => {
               <Settings className="h-4 w-4" />
             </Button>
             
-            {/* Balance Display */}
-            <div className="hidden md:flex items-center gap-3 px-4 py-2 rounded-xl bg-gradient-to-r from-primary/20 to-accent/20 border border-primary/30">
-              <Wallet className="h-4 w-4 text-primary" />
-              <div className="text-right">
-                <p className="text-xs text-muted-foreground">Balance</p>
-                <p className="text-sm font-bold text-foreground">$10,000.00</p>
-              </div>
-            </div>
+            {/* Wallet Connect */}
+            <WalletConnect />
             
             {isGuest && (
               <Button

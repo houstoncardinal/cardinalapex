@@ -22,7 +22,8 @@ interface PriceAlert {
   created_at: string;
 }
 
-const SYMBOLS = ['BTC', 'ETH', 'SOL', 'DOGE', 'ADA', 'XRP'];
+// Expanded symbols including meme coins
+const SYMBOLS = ['BTC', 'ETH', 'SOL', 'BONK', 'WIF', 'PEPE', 'POPCAT', 'MEW', 'BOME', 'DOGE', 'SHIB', 'FLOKI'];
 
 export const PriceAlerts = () => {
   const { user } = useAuth();

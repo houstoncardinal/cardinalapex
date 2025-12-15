@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { useLivePrices } from "@/hooks/useLivePrice";
+import { useNotifications } from "@/hooks/useNotifications";
 
 interface PriceAlert {
   id: string;
@@ -26,6 +27,7 @@ const SYMBOLS = ['BTC', 'ETH', 'SOL', 'DOGE', 'ADA', 'XRP'];
 export const PriceAlerts = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { notifyPriceAlert } = useNotifications();
   const [alerts, setAlerts] = useState<PriceAlert[]>([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
@@ -107,13 +109,16 @@ export const PriceAlerts = () => {
           .update({ is_triggered: true, triggered_at: new Date().toISOString() })
           .eq('id', alert.id);
 
+        // Send push notification
+        notifyPriceAlert(alert.symbol, alert.target_price, currentPrice, alert.condition as 'above' | 'below');
+
         toast({
           title: "Price Alert Triggered!",
           description: `${alert.symbol} is now ${alert.condition} $${alert.target_price.toLocaleString()} (Current: $${currentPrice.toLocaleString()})`,
         });
       }
     });
-  }, [prices, alerts, toast]);
+  }, [prices, alerts, toast, notifyPriceAlert]);
 
   const createAlert = async () => {
     if (!user || !newPrice) return;

@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { useLivePrice } from "@/hooks/useLivePrice";
+import { useNotifications } from "@/hooks/useNotifications";
 import { 
   Brain, 
   TrendingUp, 
@@ -18,10 +19,14 @@ import {
   BarChart3,
   Coins,
   DollarSign,
-  Activity
+  Activity,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { TechnicalIndicators } from "./TechnicalIndicators";
+import type { TradingSignal } from "@/lib/technicalIndicators";
 
 interface PatternDetection {
   name: string;
@@ -68,7 +73,10 @@ export const PatternChart = () => {
   const [isExecuting, setIsExecuting] = useState(false);
   const [autoTradeEnabled, setAutoTradeEnabled] = useState(true);
   const [showVolume, setShowVolume] = useState(false);
+  const [showIndicators, setShowIndicators] = useState(true);
+  const [indicatorSignals, setIndicatorSignals] = useState<TradingSignal[]>([]);
   const { toast } = useToast();
+  const { notifyTradeExecution, notifyHighConfidenceSignal } = useNotifications();
 
   const assets = market === 'crypto' ? CRYPTO_ASSETS : STOCK_ASSETS;
   const { priceData, historicalData, loading, refetch } = useLivePrice(selectedSymbol, market);
@@ -152,12 +160,16 @@ export const PatternChart = () => {
           description: `${detectedPattern} at ${confidence}% confidence. Executing trade...`,
         });
         
+        // Send push notification
+        notifyHighConfidenceSignal(selectedSymbol, detectedPattern, confidence, isBullish ? 'bullish' : 'bearish');
+        
         await executeTrade(detected);
       } else if (confidence >= 85) {
         toast({
           title: "High Confidence Signal",
           description: `${detectedPattern} detected at ${confidence}% - Auto-trade disabled`,
         });
+        notifyHighConfidenceSignal(selectedSymbol, detectedPattern, confidence, isBullish ? 'bullish' : 'bearish');
       }
 
     } catch (error) {
@@ -192,6 +204,9 @@ export const PatternChart = () => {
       });
 
       if (error) throw error;
+
+      // Send push notification for trade execution
+      notifyTradeExecution(selectedSymbol, patternData.direction === 'bullish' ? 'BUY' : 'SELL', currentPrice);
 
       toast({
         title: "Trade Executed!",
@@ -566,6 +581,16 @@ export const PatternChart = () => {
           >
             Vol
           </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowIndicators(!showIndicators)}
+            className={cn(showIndicators && "bg-primary/20", "gap-1")}
+          >
+            <Activity className="h-4 w-4" />
+            Indicators
+            {showIndicators ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+          </Button>
           <Button 
             onClick={detectPatterns}
             disabled={isAnalyzing}
@@ -585,6 +610,29 @@ export const PatternChart = () => {
           </Button>
         </div>
       </div>
+
+      {/* Technical Indicators Panel */}
+      <AnimatePresence>
+        {showIndicators && historicalData.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="mt-4 p-4 rounded-xl bg-secondary/20 border border-border overflow-hidden"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <Activity className="h-5 w-5 text-primary" />
+              <h4 className="font-semibold">Technical Indicators</h4>
+              <Badge variant="outline" className="text-xs">AI Analysis</Badge>
+            </div>
+            <TechnicalIndicators 
+              historicalData={historicalData} 
+              onSignalChange={setIndicatorSignals}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

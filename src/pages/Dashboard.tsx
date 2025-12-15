@@ -40,6 +40,9 @@ import { AutoTradeScheduler } from "@/components/dashboard/AutoTradeScheduler";
 import { TokenLaunchDetector } from "@/components/dashboard/TokenLaunchDetector";
 import { PnLCalculator } from "@/components/dashboard/PnLCalculator";
 import { MultiWalletManager } from "@/components/dashboard/MultiWalletManager";
+import { AITradeSuggestions } from "@/components/dashboard/AITradeSuggestions";
+import { TradingChatRoom } from "@/components/dashboard/TradingChatRoom";
+import { ArbitrageScanner } from "@/components/dashboard/ArbitrageScanner";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -226,6 +229,21 @@ const Dashboard = () => {
             {/* Multi-Wallet Manager */}
             <ErrorBoundary fallbackMessage="Failed to load multi-wallet manager">
               <MultiWalletManager />
+            </ErrorBoundary>
+            
+            {/* AI Trade Suggestions */}
+            <ErrorBoundary fallbackMessage="Failed to load AI trade suggestions">
+              <AITradeSuggestions />
+            </ErrorBoundary>
+            
+            {/* Trading Chat Room */}
+            <ErrorBoundary fallbackMessage="Failed to load trading chat">
+              <TradingChatRoom />
+            </ErrorBoundary>
+            
+            {/* Arbitrage Scanner */}
+            <ErrorBoundary fallbackMessage="Failed to load arbitrage scanner">
+              <ArbitrageScanner />
             </ErrorBoundary>
             
             {/* Liquidity Pool Tracking */}

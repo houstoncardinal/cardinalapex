@@ -37,6 +37,9 @@ import { GasTracker } from "@/components/dashboard/GasTracker";
 import { PortfolioAlerts } from "@/components/dashboard/PortfolioAlerts";
 import { PricePrediction } from "@/components/dashboard/PricePrediction";
 import { AutoTradeScheduler } from "@/components/dashboard/AutoTradeScheduler";
+import { TokenLaunchDetector } from "@/components/dashboard/TokenLaunchDetector";
+import { PnLCalculator } from "@/components/dashboard/PnLCalculator";
+import { MultiWalletManager } from "@/components/dashboard/MultiWalletManager";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -208,6 +211,21 @@ const Dashboard = () => {
             {/* AI Price Prediction */}
             <ErrorBoundary fallbackMessage="Failed to load price prediction">
               <PricePrediction />
+            </ErrorBoundary>
+            
+            {/* Token Launch Detector */}
+            <ErrorBoundary fallbackMessage="Failed to load token launch detector">
+              <TokenLaunchDetector />
+            </ErrorBoundary>
+            
+            {/* P&L Calculator & Tax Report */}
+            <ErrorBoundary fallbackMessage="Failed to load P&L calculator">
+              <PnLCalculator />
+            </ErrorBoundary>
+            
+            {/* Multi-Wallet Manager */}
+            <ErrorBoundary fallbackMessage="Failed to load multi-wallet manager">
+              <MultiWalletManager />
             </ErrorBoundary>
             
             {/* Liquidity Pool Tracking */}

@@ -13,6 +13,7 @@ import { TradesHistory } from "@/components/dashboard/TradesHistory";
 import { PriceAlerts } from "@/components/dashboard/PriceAlerts";
 import { LiveTradingActivity } from "@/components/dashboard/LiveTradingActivity";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
+import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -55,6 +56,9 @@ const Dashboard = () => {
             </AlertDescription>
           </Alert>
         )}
+
+        {/* Trading Robots - Connect Wallet & Choose Robots */}
+        <TradingRobots />
 
         {/* Market Overview - Full Width */}
         <MarketOverview />

@@ -59,6 +59,9 @@ import SmartMoneyFlow from "@/components/dashboard/SmartMoneyFlow";
 import FundingRateTracker from "@/components/dashboard/FundingRateTracker";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
+import DeltaVolume from "@/components/dashboard/DeltaVolume";
+import LiquidationHeatmap from "@/components/dashboard/LiquidationHeatmap";
+import OrderFlowImbalance from "@/components/dashboard/OrderFlowImbalance";
 import { Loader2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -328,6 +331,21 @@ const Dashboard = () => {
             {/* Funding Rate Tracker */}
             <ErrorBoundary fallbackMessage="Failed to load funding rate tracker">
               <FundingRateTracker />
+            </ErrorBoundary>
+            
+            {/* Delta Volume */}
+            <ErrorBoundary fallbackMessage="Failed to load delta volume">
+              <DeltaVolume />
+            </ErrorBoundary>
+            
+            {/* Liquidation Heatmap */}
+            <ErrorBoundary fallbackMessage="Failed to load liquidation heatmap">
+              <LiquidationHeatmap />
+            </ErrorBoundary>
+            
+            {/* Order Flow Imbalance */}
+            <ErrorBoundary fallbackMessage="Failed to load order flow imbalance">
+              <OrderFlowImbalance />
             </ErrorBoundary>
             
             {/* Liquidity Pool Tracking */}

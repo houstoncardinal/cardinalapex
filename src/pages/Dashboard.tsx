@@ -33,6 +33,9 @@ import { SentimentAnalysis } from "@/components/dashboard/SentimentAnalysis";
 import { TokenScanner } from "@/components/dashboard/TokenScanner";
 import { LiquidityTracking } from "@/components/dashboard/LiquidityTracking";
 import { NewsFeed } from "@/components/dashboard/NewsFeed";
+import { GasTracker } from "@/components/dashboard/GasTracker";
+import { PortfolioAlerts } from "@/components/dashboard/PortfolioAlerts";
+import { PricePrediction } from "@/components/dashboard/PricePrediction";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -189,6 +192,21 @@ const Dashboard = () => {
             {/* Token Scanner */}
             <ErrorBoundary fallbackMessage="Failed to load token scanner">
               <TokenScanner />
+            </ErrorBoundary>
+            
+            {/* Gas Tracker */}
+            <ErrorBoundary fallbackMessage="Failed to load gas tracker">
+              <GasTracker />
+            </ErrorBoundary>
+            
+            {/* Portfolio Alerts */}
+            <ErrorBoundary fallbackMessage="Failed to load portfolio alerts">
+              <PortfolioAlerts />
+            </ErrorBoundary>
+            
+            {/* AI Price Prediction */}
+            <ErrorBoundary fallbackMessage="Failed to load price prediction">
+              <PricePrediction />
             </ErrorBoundary>
             
             {/* Liquidity Pool Tracking */}

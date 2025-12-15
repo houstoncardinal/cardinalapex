@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Bot, Zap, Sparkles, TrendingUp, Brain, Settings2, Play, Pause, Loader2 } from "lucide-react";
+import { Bot, Zap, Sparkles, TrendingUp, Brain, Settings2, Play, Pause, Loader2, Bell } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { NotificationSettings } from "./NotificationSettings";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface AIAgent {
   id: string;
@@ -232,6 +234,19 @@ export const AITradingPanel = () => {
           </div>
         ))}
       </div>
+
+      {/* Notification Settings */}
+      <Collapsible className="mt-4">
+        <CollapsibleTrigger asChild>
+          <Button variant="outline" className="w-full gap-2">
+            <Bell className="h-4 w-4" />
+            Notification Settings
+          </Button>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="mt-4">
+          <NotificationSettings />
+        </CollapsibleContent>
+      </Collapsible>
 
       <Button variant="outline" className="w-full mt-4 gap-2">
         <Settings2 className="h-4 w-4" />

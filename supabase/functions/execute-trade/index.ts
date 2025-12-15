@@ -64,7 +64,8 @@ serve(async (req) => {
     }
 
     // Calculate potential profit/loss based on entry vs target
-    const potentialProfit = action === 'BUY' 
+    const tradeType = action.toLowerCase(); // Convert to lowercase for DB constraint
+    const potentialProfit = tradeType === 'buy' 
       ? ((target - entry) / entry) * 100 * quantity
       : ((entry - target) / entry) * 100 * quantity;
 
@@ -76,7 +77,7 @@ serve(async (req) => {
         bot_id: bot?.id || null,
         symbol,
         market,
-        type: action,
+        type: tradeType, // Must be lowercase 'buy' or 'sell'
         price: entry,
         quantity,
         status: 'pending',

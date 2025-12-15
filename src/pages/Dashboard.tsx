@@ -54,6 +54,9 @@ import { PositionSizer } from "@/components/dashboard/PositionSizer";
 import { SessionTimer } from "@/components/dashboard/SessionTimer";
 import { BreakoutDetector } from "@/components/dashboard/BreakoutDetector";
 import { MarketDepth } from "@/components/dashboard/MarketDepth";
+import VWAPIndicator from "@/components/dashboard/VWAPIndicator";
+import SmartMoneyFlow from "@/components/dashboard/SmartMoneyFlow";
+import FundingRateTracker from "@/components/dashboard/FundingRateTracker";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -310,6 +313,21 @@ const Dashboard = () => {
             {/* Market Depth */}
             <ErrorBoundary fallbackMessage="Failed to load market depth">
               <MarketDepth />
+            </ErrorBoundary>
+            
+            {/* VWAP Indicator */}
+            <ErrorBoundary fallbackMessage="Failed to load VWAP indicator">
+              <VWAPIndicator />
+            </ErrorBoundary>
+            
+            {/* Smart Money Flow */}
+            <ErrorBoundary fallbackMessage="Failed to load smart money flow">
+              <SmartMoneyFlow />
+            </ErrorBoundary>
+            
+            {/* Funding Rate Tracker */}
+            <ErrorBoundary fallbackMessage="Failed to load funding rate tracker">
+              <FundingRateTracker />
             </ErrorBoundary>
             
             {/* Liquidity Pool Tracking */}

@@ -51,6 +51,9 @@ import { StopLossTakeProfit } from "@/components/dashboard/StopLossTakeProfit";
 import { PortfolioHeatMap } from "@/components/dashboard/PortfolioHeatMap";
 import { TradingSignals } from "@/components/dashboard/TradingSignals";
 import { PositionSizer } from "@/components/dashboard/PositionSizer";
+import { SessionTimer } from "@/components/dashboard/SessionTimer";
+import { BreakoutDetector } from "@/components/dashboard/BreakoutDetector";
+import { MarketDepth } from "@/components/dashboard/MarketDepth";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -292,6 +295,21 @@ const Dashboard = () => {
             {/* Position Sizer */}
             <ErrorBoundary fallbackMessage="Failed to load position sizer">
               <PositionSizer />
+            </ErrorBoundary>
+            
+            {/* Session Timer */}
+            <ErrorBoundary fallbackMessage="Failed to load session timer">
+              <SessionTimer />
+            </ErrorBoundary>
+            
+            {/* Breakout Detector */}
+            <ErrorBoundary fallbackMessage="Failed to load breakout detector">
+              <BreakoutDetector />
+            </ErrorBoundary>
+            
+            {/* Market Depth */}
+            <ErrorBoundary fallbackMessage="Failed to load market depth">
+              <MarketDepth />
             </ErrorBoundary>
             
             {/* Liquidity Pool Tracking */}

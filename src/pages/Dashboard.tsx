@@ -21,6 +21,9 @@ import { PortfolioPnLChart } from "@/components/dashboard/PortfolioPnLChart";
 import { TradingAnalytics } from "@/components/dashboard/TradingAnalytics";
 import { PortfolioRebalancing } from "@/components/dashboard/PortfolioRebalancing";
 import { RiskDisclaimer, TradingWarningFooter } from "@/components/dashboard/RiskDisclaimer";
+import { DCAAutomation } from "@/components/dashboard/DCAAutomation";
+import { CopyTrading } from "@/components/dashboard/CopyTrading";
+import { TradeJournal } from "@/components/dashboard/TradeJournal";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -162,6 +165,21 @@ const Dashboard = () => {
             {/* AI Portfolio Rebalancing */}
             <ErrorBoundary fallbackMessage="Failed to load portfolio rebalancing">
               <PortfolioRebalancing />
+            </ErrorBoundary>
+            
+            {/* DCA Automation */}
+            <ErrorBoundary fallbackMessage="Failed to load DCA automation">
+              <DCAAutomation />
+            </ErrorBoundary>
+            
+            {/* Copy Trading */}
+            <ErrorBoundary fallbackMessage="Failed to load copy trading">
+              <CopyTrading />
+            </ErrorBoundary>
+            
+            {/* Trade Journal */}
+            <ErrorBoundary fallbackMessage="Failed to load trade journal">
+              <TradeJournal />
             </ErrorBoundary>
             
             {/* Price Alerts & Watchlist - Stack on tablet, side by side on large screens */}

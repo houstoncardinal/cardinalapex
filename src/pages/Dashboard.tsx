@@ -24,6 +24,9 @@ import { RiskDisclaimer, TradingWarningFooter } from "@/components/dashboard/Ris
 import { DCAAutomation } from "@/components/dashboard/DCAAutomation";
 import { CopyTrading } from "@/components/dashboard/CopyTrading";
 import { TradeJournal } from "@/components/dashboard/TradeJournal";
+import { NotificationWebhooks } from "@/components/dashboard/NotificationWebhooks";
+import { Backtesting } from "@/components/dashboard/Backtesting";
+import { SocialLeaderboard } from "@/components/dashboard/SocialLeaderboard";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -180,6 +183,21 @@ const Dashboard = () => {
             {/* Trade Journal */}
             <ErrorBoundary fallbackMessage="Failed to load trade journal">
               <TradeJournal />
+            </ErrorBoundary>
+            
+            {/* Backtesting */}
+            <ErrorBoundary fallbackMessage="Failed to load backtesting">
+              <Backtesting />
+            </ErrorBoundary>
+            
+            {/* Social Leaderboard */}
+            <ErrorBoundary fallbackMessage="Failed to load leaderboard">
+              <SocialLeaderboard />
+            </ErrorBoundary>
+            
+            {/* Notification Webhooks */}
+            <ErrorBoundary fallbackMessage="Failed to load notification webhooks">
+              <NotificationWebhooks />
             </ErrorBoundary>
             
             {/* Price Alerts & Watchlist - Stack on tablet, side by side on large screens */}

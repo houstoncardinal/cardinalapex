@@ -7,6 +7,8 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { useLivePrice } from "@/hooks/useLivePrice";
 import { useNotifications } from "@/hooks/useNotifications";
+import { usePhantomWallet } from "@/hooks/usePhantomWallet";
+import { useSolanaTrading } from "@/hooks/useSolanaTrading";
 import { 
   Brain, 
   TrendingUp, 
@@ -21,7 +23,8 @@ import {
   DollarSign,
   Activity,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Wallet
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -77,6 +80,10 @@ export const PatternChart = () => {
   const [indicatorSignals, setIndicatorSignals] = useState<TradingSignal[]>([]);
   const { toast } = useToast();
   const { notifyTradeExecution, notifyHighConfidenceSignal } = useNotifications();
+  
+  // Wallet and trading hooks
+  const { connected: walletConnected, publicKey: walletAddress, connect: connectWallet } = usePhantomWallet();
+  const { executeTrade: executeOnChainTrade, isTrading: isOnChainTrading } = useSolanaTrading();
 
   const assets = market === 'crypto' ? CRYPTO_ASSETS : STOCK_ASSETS;
   const { priceData, historicalData, loading, refetch } = useLivePrice(selectedSymbol, market);
@@ -188,30 +195,69 @@ export const PatternChart = () => {
     setIsExecuting(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke("execute-trade", {
-        body: {
-          symbol: selectedSymbol,
-          market,
-          action: patternData.direction === 'bullish' ? 'BUY' : 'SELL',
-          price: currentPrice,
-          quantity: market === 'crypto' ? 0.1 : 10,
-          confidence: patternData.confidence,
-          pattern: patternData.name,
-          entry: patternData.entry,
-          target: patternData.target,
-          stopLoss: patternData.stopLoss,
+      // For crypto on Solana, execute real on-chain trade via Phantom wallet
+      if (market === 'crypto' && walletConnected) {
+        const action = patternData.direction === 'bullish' ? 'BUY' : 'SELL';
+        
+        // Execute on-chain trade through Jupiter
+        const tradeResult = await executeOnChainTrade({
+          inputToken: selectedSymbol,
+          outputToken: action === 'BUY' ? selectedSymbol : 'SOL',
+          amount: 0.05, // Trade 0.05 SOL worth
+          action,
+          slippageBps: 100, // 1% slippage
+        });
+
+        if (tradeResult.success) {
+          // Also log to database
+          await supabase.functions.invoke("execute-trade", {
+            body: {
+              symbol: selectedSymbol,
+              market,
+              action,
+              price: currentPrice,
+              quantity: tradeResult.inputAmount || 0.05,
+              confidence: patternData.confidence,
+              pattern: patternData.name,
+              entry: patternData.entry,
+              target: patternData.target,
+              stopLoss: patternData.stopLoss,
+            }
+          });
+
+          notifyTradeExecution(selectedSymbol, action, currentPrice);
+          
+          toast({
+            title: "🚀 On-Chain Trade Executed!",
+            description: `${action} order confirmed on Solana blockchain`,
+          });
         }
-      });
+      } else {
+        // Fallback to database-only trade (stocks or no wallet)
+        const { data, error } = await supabase.functions.invoke("execute-trade", {
+          body: {
+            symbol: selectedSymbol,
+            market,
+            action: patternData.direction === 'bullish' ? 'BUY' : 'SELL',
+            price: currentPrice,
+            quantity: market === 'crypto' ? 0.1 : 10,
+            confidence: patternData.confidence,
+            pattern: patternData.name,
+            entry: patternData.entry,
+            target: patternData.target,
+            stopLoss: patternData.stopLoss,
+          }
+        });
 
-      if (error) throw error;
+        if (error) throw error;
 
-      // Send push notification for trade execution
-      notifyTradeExecution(selectedSymbol, patternData.direction === 'bullish' ? 'BUY' : 'SELL', currentPrice);
+        notifyTradeExecution(selectedSymbol, patternData.direction === 'bullish' ? 'BUY' : 'SELL', currentPrice);
 
-      toast({
-        title: "Trade Executed!",
-        description: data.message,
-      });
+        toast({
+          title: "Trade Executed!",
+          description: data.message,
+        });
+      }
     } catch (error) {
       console.error("Trade execution error:", error);
       toast({
@@ -415,24 +461,54 @@ export const PatternChart = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
+                className="space-y-2"
               >
-                <Button 
-                  className="w-full gap-2 glow-primary" 
-                  onClick={() => executeTrade(pattern)}
-                  disabled={isExecuting}
-                >
-                  {isExecuting ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      Executing Trade...
-                    </>
-                  ) : (
-                    <>
-                      <Zap className="h-4 w-4" />
-                      Execute {pattern.direction === 'bullish' ? 'BUY' : 'SELL'} Now
-                    </>
-                  )}
-                </Button>
+                {/* Wallet status indicator for crypto */}
+                {market === 'crypto' && (
+                  <div className={cn(
+                    "flex items-center justify-center gap-2 p-2 rounded-lg text-sm",
+                    walletConnected 
+                      ? "bg-success/20 text-success border border-success/30" 
+                      : "bg-warning/20 text-warning border border-warning/30"
+                  )}>
+                    <Wallet className="h-4 w-4" />
+                    {walletConnected ? (
+                      <span>Phantom connected: {walletAddress?.slice(0, 4)}...{walletAddress?.slice(-4)} • Real trades enabled</span>
+                    ) : (
+                      <span>Connect wallet for real on-chain trades</span>
+                    )}
+                  </div>
+                )}
+                
+                {market === 'crypto' && !walletConnected ? (
+                  <Button 
+                    className="w-full gap-2" 
+                    variant="outline"
+                    onClick={connectWallet}
+                  >
+                    <Wallet className="h-4 w-4" />
+                    Connect Phantom to Trade
+                  </Button>
+                ) : (
+                  <Button 
+                    className="w-full gap-2 glow-primary" 
+                    onClick={() => executeTrade(pattern)}
+                    disabled={isExecuting || isOnChainTrading}
+                  >
+                    {isExecuting || isOnChainTrading ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        {isOnChainTrading ? 'Executing On-Chain...' : 'Executing Trade...'}
+                      </>
+                    ) : (
+                      <>
+                        <Zap className="h-4 w-4" />
+                        {market === 'crypto' && walletConnected ? '⚡ Execute On-Chain ' : 'Execute '}
+                        {pattern.direction === 'bullish' ? 'BUY' : 'SELL'}
+                      </>
+                    )}
+                  </Button>
+                )}
               </motion.div>
             )}
           </motion.div>

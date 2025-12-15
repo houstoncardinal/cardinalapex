@@ -18,6 +18,7 @@ import { QuickSwap } from "@/components/dashboard/QuickSwap";
 import { PriceAlerts } from "@/components/dashboard/PriceAlerts";
 import { LiveTradingActivity } from "@/components/dashboard/LiveTradingActivity";
 import { PortfolioPnLChart } from "@/components/dashboard/PortfolioPnLChart";
+import { PortfolioComparison } from "@/components/dashboard/PortfolioComparison";
 import { TradingAnalytics } from "@/components/dashboard/TradingAnalytics";
 import { PortfolioRebalancing } from "@/components/dashboard/PortfolioRebalancing";
 import { RiskDisclaimer, TradingWarningFooter } from "@/components/dashboard/RiskDisclaimer";
@@ -27,6 +28,8 @@ import { TradeJournal } from "@/components/dashboard/TradeJournal";
 import { NotificationWebhooks } from "@/components/dashboard/NotificationWebhooks";
 import { Backtesting } from "@/components/dashboard/Backtesting";
 import { SocialLeaderboard } from "@/components/dashboard/SocialLeaderboard";
+import { WhaleTracking } from "@/components/dashboard/WhaleTracking";
+import { SentimentAnalysis } from "@/components/dashboard/SentimentAnalysis";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -131,6 +134,21 @@ const Dashboard = () => {
             {/* P&L History Chart */}
             <ErrorBoundary fallbackMessage="Failed to load P&L chart">
               <PortfolioPnLChart />
+            </ErrorBoundary>
+            
+            {/* Multi-Token Portfolio Comparison */}
+            <ErrorBoundary fallbackMessage="Failed to load portfolio comparison">
+              <PortfolioComparison />
+            </ErrorBoundary>
+            
+            {/* Whale Tracking */}
+            <ErrorBoundary fallbackMessage="Failed to load whale tracking">
+              <WhaleTracking />
+            </ErrorBoundary>
+            
+            {/* Sentiment Analysis */}
+            <ErrorBoundary fallbackMessage="Failed to load sentiment analysis">
+              <SentimentAnalysis />
             </ErrorBoundary>
             
             {/* Trading Analytics Dashboard */}

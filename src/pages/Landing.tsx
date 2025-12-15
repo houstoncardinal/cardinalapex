@@ -48,19 +48,19 @@ const Landing = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-10 flex items-center justify-between px-6 py-4 lg:px-12">
+      <nav className="relative z-10 flex items-center justify-between px-4 sm:px-6 py-4 lg:px-12">
         <div className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20">
-            <BarChart3 className="h-6 w-6 text-primary" />
+          <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-primary/20">
+            <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
           </div>
-          <span className="text-xl font-bold text-foreground">TradeFlow</span>
+          <span className="text-lg sm:text-xl font-bold text-foreground">TradeFlow</span>
         </div>
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" onClick={() => navigate("/auth")}>
+        <div className="flex items-center gap-2 sm:gap-4">
+          <Button variant="ghost" size="sm" className="hidden sm:flex" onClick={() => navigate("/auth")}>
             Sign In
           </Button>
-          <Button onClick={() => navigate("/auth?mode=signup")} className="glow-primary">
-            Start Trading <ChevronRight className="h-4 w-4 ml-1" />
+          <Button size="sm" onClick={() => navigate("/auth?mode=signup")} className="glow-primary text-xs sm:text-sm">
+            Start Trading <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 ml-1" />
           </Button>
         </div>
       </nav>

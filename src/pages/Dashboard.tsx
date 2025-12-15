@@ -45,6 +45,9 @@ import { TradingChatRoom } from "@/components/dashboard/TradingChatRoom";
 import { ArbitrageScanner } from "@/components/dashboard/ArbitrageScanner";
 import { PortfolioRiskAnalyzer } from "@/components/dashboard/PortfolioRiskAnalyzer";
 import { LimitOrderManager } from "@/components/dashboard/LimitOrderManager";
+import { AdvancedOrders } from "@/components/dashboard/AdvancedOrders";
+import { CorrelationMatrix } from "@/components/dashboard/CorrelationMatrix";
+import { StopLossTakeProfit } from "@/components/dashboard/StopLossTakeProfit";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -256,6 +259,21 @@ const Dashboard = () => {
             {/* Limit Order Manager */}
             <ErrorBoundary fallbackMessage="Failed to load limit orders">
               <LimitOrderManager />
+            </ErrorBoundary>
+            
+            {/* Advanced Orders - Trailing Stops & OCO */}
+            <ErrorBoundary fallbackMessage="Failed to load advanced orders">
+              <AdvancedOrders />
+            </ErrorBoundary>
+            
+            {/* Correlation Matrix */}
+            <ErrorBoundary fallbackMessage="Failed to load correlation matrix">
+              <CorrelationMatrix />
+            </ErrorBoundary>
+            
+            {/* Stop-Loss / Take-Profit */}
+            <ErrorBoundary fallbackMessage="Failed to load stop-loss/take-profit">
+              <StopLossTakeProfit />
             </ErrorBoundary>
             
             {/* Liquidity Pool Tracking */}

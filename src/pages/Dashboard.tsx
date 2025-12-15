@@ -16,6 +16,7 @@ import { MemeCoinTicker } from "@/components/dashboard/MemeCoinTicker";
 import { QuickSwap } from "@/components/dashboard/QuickSwap";
 import { PriceAlerts } from "@/components/dashboard/PriceAlerts";
 import { LiveTradingActivity } from "@/components/dashboard/LiveTradingActivity";
+import { PortfolioPnLChart } from "@/components/dashboard/PortfolioPnLChart";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -92,6 +93,9 @@ const Dashboard = () => {
           <div className="xl:col-span-2 space-y-4 md:space-y-6">
             <PatternChart />
             <LiveTradingActivity />
+            
+            {/* P&L History Chart */}
+            <PortfolioPnLChart />
             
             {/* On-Chain Trade History - Solscan links with P&L */}
             <OnChainTradeHistory />

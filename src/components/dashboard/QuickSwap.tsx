@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRightLeft, Loader2, Wallet, Zap } from 'lucide-react';
+import { ArrowRightLeft, Loader2, Wallet, Zap, Route } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { useSolanaTrading, TOKEN_INFO } from '@/hooks/useSolanaTrading';
 import { usePhantomWallet } from '@/hooks/usePhantomWallet';
 import { useMemeCoinsPrice } from '@/hooks/useMemeCoinsPrice';
+import { SwapRouteVisualization } from './SwapRouteVisualization';
 
 const QUICK_SWAP_TOKENS = ['BONK', 'WIF', 'PEPE', 'POPCAT', 'MEW', 'BOME'];
 
@@ -17,6 +18,8 @@ export const QuickSwap = () => {
   const [selectedToken, setSelectedToken] = useState<string | null>(null);
   const [amount, setAmount] = useState('0.1');
   const [isBuying, setIsBuying] = useState(true);
+  const [showRoute, setShowRoute] = useState(false);
+  const [previewToken, setPreviewToken] = useState<string | null>(null);
 
   const handleQuickSwap = async (token: string) => {
     const amountNum = parseFloat(amount);
@@ -124,9 +127,11 @@ export const QuickSwap = () => {
               size="sm"
               disabled={isTrading}
               onClick={() => handleQuickSwap(token)}
+              onMouseEnter={() => setPreviewToken(token)}
               className={cn(
                 "h-auto py-2 flex flex-col items-center gap-0.5 transition-all",
                 "hover:border-primary hover:bg-primary/10",
+                previewToken === token && showRoute && "border-primary bg-primary/10",
                 isTrading && "opacity-50"
               )}
             >
@@ -164,6 +169,30 @@ export const QuickSwap = () => {
         <div className="mt-3 flex items-center justify-center gap-2 text-xs text-muted-foreground">
           <Loader2 className="h-3 w-3 animate-spin" />
           <span>Processing swap...</span>
+        </div>
+      )}
+
+      {/* Route Preview Toggle */}
+      <div className="mt-3 pt-3 border-t border-border">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full h-7 text-xs gap-1"
+          onClick={() => setShowRoute(!showRoute)}
+        >
+          <Route className="h-3 w-3" />
+          {showRoute ? 'Hide Route Preview' : 'Show Route Preview'}
+        </Button>
+      </div>
+
+      {/* Route Visualization */}
+      {showRoute && previewToken && (
+        <div className="mt-3">
+          <SwapRouteVisualization
+            inputToken={isBuying ? 'SOL' : previewToken}
+            outputToken={isBuying ? previewToken : 'SOL'}
+            amount={parseFloat(amount) || 0.1}
+          />
         </div>
       )}
     </div>

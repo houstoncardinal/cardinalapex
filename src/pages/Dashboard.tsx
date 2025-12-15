@@ -12,6 +12,7 @@ import { PortfolioTracking } from "@/components/dashboard/PortfolioTracking";
 import { TradesHistory } from "@/components/dashboard/TradesHistory";
 import { PriceAlerts } from "@/components/dashboard/PriceAlerts";
 import { LiveTradingActivity } from "@/components/dashboard/LiveTradingActivity";
+import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import { Loader2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -83,6 +84,11 @@ const Dashboard = () => {
           
           {/* Sidebar - Collapses on mobile */}
           <div className="space-y-4 md:space-y-6">
+            {/* AI Trading Assistant - New GPT-powered chat */}
+            <div className="h-[500px]">
+              <TradingAssistant />
+            </div>
+            
             {/* AI Trading Panel - Priority on all screens */}
             <AITradingPanel />
             

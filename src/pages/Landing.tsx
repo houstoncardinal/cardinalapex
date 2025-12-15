@@ -1,202 +1,585 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bot, TrendingUp, Zap, Shield, ChevronRight, BarChart3, Wallet, ArrowUpRight } from "lucide-react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { 
+  Bot, TrendingUp, Zap, Shield, ChevronRight, BarChart3, Wallet, ArrowUpRight,
+  LineChart, Lock, Globe, Cpu, Target, Award, Users, Clock, CheckCircle2,
+  Sparkles, Play, ArrowRight, Star, Activity, Eye, Layers, Rocket
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-
-const stats = [
-  { label: "Total Volume", value: "$2.4B+", change: "+127%" },
-  { label: "Active Traders", value: "50K+", change: "+89%" },
-  { label: "Avg. Returns", value: "47.3%", change: "+23%" },
-  { label: "AI Accuracy", value: "94.7%", change: "+5%" },
-];
 
 const features = [
   {
     icon: Bot,
     title: "AI Trading Agents",
-    description: "Aggressive AI bots that analyze markets 24/7 and execute trades at the perfect moment",
+    description: "Deploy aggressive AI bots that analyze markets 24/7 and execute trades at the perfect moment with 94%+ accuracy",
+    highlight: "24/7 Automated",
+    color: "from-emerald-500 to-green-600",
   },
   {
-    icon: TrendingUp,
-    title: "Stocks & Crypto",
-    description: "Trade both markets from one platform. NASDAQ, NYSE, Bitcoin, Ethereum, and 500+ assets",
+    icon: LineChart,
+    title: "Advanced Pattern Recognition",
+    description: "Detect Head & Shoulders, Elliott Waves, Wyckoff patterns, and smart money movements before they happen",
+    highlight: "85%+ Confidence",
+    color: "from-cyan-500 to-blue-600",
   },
   {
     icon: Zap,
-    title: "Lightning Fast",
-    description: "Sub-millisecond execution. Your AI agents never miss an opportunity",
+    title: "Lightning Fast Execution",
+    description: "Sub-millisecond trade execution on Solana blockchain. Your AI agents never miss an opportunity",
+    highlight: "< 1ms Speed",
+    color: "from-yellow-500 to-orange-600",
   },
   {
     icon: Shield,
-    title: "Risk Management",
-    description: "Built-in stop-losses, position sizing, and portfolio protection powered by AI",
+    title: "Smart Risk Management",
+    description: "Built-in stop-losses, position sizing, and portfolio protection. Never lose more than you're comfortable with",
+    highlight: "AI Protected",
+    color: "from-purple-500 to-pink-600",
   },
+  {
+    icon: Target,
+    title: "Precision Entry & Exit",
+    description: "RSI, MACD, Bollinger Bands, VWAP - all analyzed together to find the perfect trade timing",
+    highlight: "Multi-Indicator",
+    color: "from-rose-500 to-red-600",
+  },
+  {
+    icon: Globe,
+    title: "Multi-Market Trading",
+    description: "Trade crypto, meme coins, stocks - all from one unified platform. BTC, ETH, SOL, PEPE, and 500+ assets",
+    highlight: "500+ Assets",
+    color: "from-indigo-500 to-violet-600",
+  },
+];
+
+const tradingBots = [
+  { name: "Alpha Predator", strategy: "Aggressive Momentum", winRate: 94, trades: "2.4K", profit: "+$847K" },
+  { name: "Trend Surfer", strategy: "Swing Trading", winRate: 89, trades: "1.8K", profit: "+$623K" },
+  { name: "Scalp Master", strategy: "High-Frequency", winRate: 91, trades: "12.3K", profit: "+$1.2M" },
+];
+
+const testimonials = [
+  { name: "Marcus R.", role: "Day Trader", quote: "Made more in 3 months than my entire year of manual trading", profit: "+$47,230" },
+  { name: "Sarah K.", role: "Crypto Investor", quote: "The AI detected a pattern I never would have seen. Life-changing.", profit: "+$128,500" },
+  { name: "David L.", role: "Portfolio Manager", quote: "Finally, an AI that actually delivers on its promises", profit: "+$312,000" },
+];
+
+const steps = [
+  { step: 1, title: "Connect Your Wallet", description: "Link your Phantom wallet securely in one click", icon: Wallet },
+  { step: 2, title: "Choose Your Strategy", description: "Select from aggressive, balanced, or conservative AI bots", icon: Bot },
+  { step: 3, title: "Watch AI Trade", description: "Sit back while AI executes profitable trades 24/7", icon: Eye },
 ];
 
 const Landing = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
+  const [activeBot, setActiveBot] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  
+  const { scrollY } = useScroll();
+  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
+
+  useEffect(() => {
+    setIsVisible(true);
+    const interval = setInterval(() => {
+      setActiveBot((prev) => (prev + 1) % tradingBots.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleSignup = () => {
+    navigate(email ? `/auth?mode=signup&email=${encodeURIComponent(email)}` : "/auth?mode=signup");
+  };
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
-      {/* Animated background */}
+      {/* Animated background with multiple layers */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1s" }} />
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-chart-purple/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_hsl(var(--primary)/0.15)_0%,_transparent_50%)]" />
+        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom_right,_hsl(var(--accent)/0.1)_0%,_transparent_50%)]" />
+        <motion.div 
+          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]"
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px]"
+          animate={{ 
+            scale: [1.2, 1, 1.2],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-chart-purple/10 rounded-full blur-[80px]"
+          animate={{ 
+            x: [-50, 50, -50],
+            y: [-30, 30, -30],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        />
+        
+        {/* Grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(hsl(var(--border)/0.05)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--border)/0.05)_1px,transparent_1px)] bg-[size:60px_60px]" />
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-10 flex items-center justify-between px-4 sm:px-6 py-4 lg:px-12">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-primary/20">
-            <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+      <motion.nav 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="relative z-50 flex items-center justify-between px-4 sm:px-6 py-4 lg:px-12"
+      >
+        <div className="flex items-center gap-3">
+          <motion.div 
+            className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent"
+            whileHover={{ scale: 1.05, rotate: 5 }}
+            transition={{ type: "spring", stiffness: 400 }}
+          >
+            <BarChart3 className="h-6 w-6 sm:h-7 sm:w-7 text-primary-foreground" />
+          </motion.div>
+          <div className="flex flex-col">
+            <span className="text-xl sm:text-2xl font-bold text-foreground">TradeFlow</span>
+            <span className="text-[10px] text-muted-foreground hidden sm:block">by Cardinal Consulting</span>
           </div>
-          <span className="text-lg sm:text-xl font-bold text-foreground">TradeFlow</span>
         </div>
-        <div className="flex items-center gap-2 sm:gap-4">
-          <Button variant="ghost" size="sm" className="hidden sm:flex" onClick={() => navigate("/auth")}>
+        
+        <div className="flex items-center gap-3 sm:gap-4">
+          <Button variant="ghost" size="sm" className="hidden md:flex text-muted-foreground hover:text-foreground" onClick={() => navigate("/auth")}>
             Sign In
           </Button>
-          <Button size="sm" onClick={() => navigate("/auth?mode=signup")} className="glow-primary text-xs sm:text-sm">
-            Start Trading <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 ml-1" />
-          </Button>
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button 
+              size="sm" 
+              onClick={handleSignup}
+              className="bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold px-4 sm:px-6 shadow-lg shadow-primary/25"
+            >
+              <span className="hidden sm:inline">Start Trading</span>
+              <span className="sm:hidden">Start</span>
+              <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          </motion.div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Hero Section */}
-      <section className="relative z-10 px-6 pt-16 pb-24 lg:px-12 lg:pt-24">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
-              <Zap className="h-4 w-4 text-primary" />
-              <span className="text-sm text-primary font-medium">AI-Powered Trading Revolution</span>
-            </div>
+      <motion.section 
+        style={{ opacity: heroOpacity, scale: heroScale }}
+        className="relative z-10 px-4 sm:px-6 pt-8 sm:pt-16 pb-16 sm:pb-24 lg:px-12 lg:pt-20"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center space-y-6 sm:space-y-8">
+            {/* Badge */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 border border-primary/30"
+            >
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              >
+                <Sparkles className="h-4 w-4 text-primary" />
+              </motion.div>
+              <span className="text-sm text-foreground font-medium">AI-Powered Trading Revolution</span>
+              <Badge variant="secondary" className="bg-primary/20 text-primary text-[10px]">NEW</Badge>
+            </motion.div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
-              Let <span className="text-primary">AI Agents</span> Trade<br />
-              While You <span className="text-accent">Sleep</span>
-            </h1>
+            {/* Main Headline */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground leading-[1.1] tracking-tight">
+                Let <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[size:200%] animate-[gradient_3s_linear_infinite]">AI Agents</span> Trade
+                <br className="hidden sm:block" />
+                <span className="sm:hidden"> </span>While You{" "}
+                <span className="relative inline-block">
+                  <span className="text-accent">Sleep</span>
+                  <motion.div 
+                    className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-accent to-primary rounded-full"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ delay: 0.8, duration: 0.6 }}
+                  />
+                </span>
+              </h1>
+            </motion.div>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              Deploy aggressive AI trading bots that analyze crypto & stocks 24/7. 
-              One-click setup. Maximum profits. Zero effort.
-            </p>
+            {/* Subheadline */}
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+            >
+              Deploy aggressive AI trading bots that analyze{" "}
+              <span className="text-foreground font-medium">crypto & meme coins</span> 24/7.
+              <br className="hidden sm:block" />
+              Real trades. Real profits. <span className="text-primary font-semibold">Zero manual effort.</span>
+            </motion.p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Button 
-                size="lg" 
-                onClick={() => navigate("/auth?mode=signup")}
-                className="text-lg px-8 py-6 glow-primary"
-              >
-                <Wallet className="h-5 w-5 mr-2" />
-                Start Free with $10K Demo
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                onClick={() => navigate("/auth")}
-                className="text-lg px-8 py-6"
-              >
-                Watch AI Trade Live
-              </Button>
-            </div>
+            {/* Quick Signup Form */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 max-w-lg mx-auto"
+            >
+              <div className="relative w-full sm:w-auto sm:flex-1">
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="h-14 pl-5 pr-4 text-base bg-card/80 border-border/50 rounded-xl w-full"
+                />
+              </div>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
+                <Button 
+                  size="lg" 
+                  onClick={handleSignup}
+                  className="h-14 text-base sm:text-lg px-6 sm:px-8 bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold shadow-xl shadow-primary/30 w-full sm:w-auto rounded-xl"
+                >
+                  <Rocket className="h-5 w-5 mr-2" />
+                  Start Trading Now
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            {/* Trust Indicators */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-4 text-sm text-muted-foreground"
+            >
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-primary" />
+                <span>No credit card required</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Shield className="h-4 w-4 text-primary" />
+                <span>Bank-grade security</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4 text-primary" />
+                <span>Start in 60 seconds</span>
+              </div>
+            </motion.div>
           </div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
-            {stats.map((stat, index) => (
-              <div 
-                key={stat.label}
-                className="glass rounded-2xl p-6 text-center opacity-0 animate-fade-in"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <p className="text-2xl md:text-3xl font-bold text-foreground">{stat.value}</p>
-                <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
-                <div className="flex items-center justify-center gap-1 mt-2 text-success text-sm">
-                  <ArrowUpRight className="h-3 w-3" />
-                  {stat.change}
+          {/* Live Trading Bot Preview */}
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.6 }}
+            className="mt-12 sm:mt-16"
+          >
+            <div className="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto border-primary/20">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
+                    <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground text-sm sm:text-base">Live AI Trading Bots</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Real-time performance</p>
+                  </div>
                 </div>
+                <Badge className="bg-green-500/20 text-green-400 border-green-500/30 animate-pulse text-xs">
+                  <Activity className="h-3 w-3 mr-1" />
+                  LIVE
+                </Badge>
               </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+                {tradingBots.map((bot, index) => (
+                  <motion.div
+                    key={bot.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1 + index * 0.1 }}
+                    className={cn(
+                      "p-4 rounded-xl transition-all duration-300 cursor-pointer",
+                      activeBot === index 
+                        ? "bg-gradient-to-br from-primary/20 to-accent/10 border border-primary/50" 
+                        : "bg-background/50 border border-border/50 hover:border-primary/30"
+                    )}
+                    onClick={() => setActiveBot(index)}
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-semibold text-foreground text-sm">{bot.name}</span>
+                      <Badge variant="outline" className="text-[10px] text-primary border-primary/50">
+                        {bot.winRate}% Win
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-3">{bot.strategy}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground">{bot.trades} trades</span>
+                      <span className="text-sm font-bold text-green-400">{bot.profit}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* How It Works */}
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">Simple Setup</Badge>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Start Trading in <span className="text-primary">3 Simple Steps</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-base sm:text-lg">
+              From signup to your first AI-powered trade in under 60 seconds
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
+            {steps.map((item, index) => (
+              <motion.div
+                key={item.step}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
+                className="relative"
+              >
+                {index < steps.length - 1 && (
+                  <div className="hidden md:block absolute top-16 left-full w-full h-0.5 bg-gradient-to-r from-primary/50 to-transparent -translate-x-1/2 z-0" />
+                )}
+                <div className="glass rounded-2xl p-6 sm:p-8 text-center relative z-10 h-full">
+                  <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-accent mx-auto mb-4 sm:mb-6">
+                    <item.icon className="h-7 w-7 sm:h-8 sm:w-8 text-primary-foreground" />
+                  </div>
+                  <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary font-bold text-sm mb-4">
+                    {item.step}
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground text-sm sm:text-base">{item.description}</p>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="relative z-10 px-6 py-24 lg:px-12 bg-secondary/30">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 bg-gradient-to-b from-secondary/30 to-background">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <Badge variant="outline" className="mb-4 text-accent border-accent/30">Advanced Technology</Badge>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
               Built for <span className="text-primary">Maximum Profits</span>
             </h2>
-            <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-              Every feature designed to help you make more money with less effort
+            <p className="text-muted-foreground max-w-2xl mx-auto text-base sm:text-lg">
+              Cutting-edge AI technology combined with professional trading strategies
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {features.map((feature, index) => (
-              <div
+              <motion.div
                 key={feature.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
                 className={cn(
-                  "glass rounded-2xl p-8 transition-all duration-300 cursor-pointer opacity-0 animate-fade-in",
-                  hoveredFeature === index && "border-primary/50 glow-primary"
+                  "glass rounded-2xl p-6 sm:p-8 transition-all duration-300 cursor-pointer group",
+                  hoveredFeature === index && "border-primary/50 shadow-xl shadow-primary/10"
                 )}
-                style={{ animationDelay: `${index * 100}ms` }}
                 onMouseEnter={() => setHoveredFeature(index)}
                 onMouseLeave={() => setHoveredFeature(null)}
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-primary/20 mb-4">
-                  <feature.icon className="h-7 w-7 text-primary" />
+                <div className={cn(
+                  "flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-gradient-to-br mb-4 sm:mb-5 transition-transform duration-300 group-hover:scale-110",
+                  feature.color
+                )}>
+                  <feature.icon className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
-              </div>
+                <Badge variant="secondary" className="mb-3 text-[10px] bg-primary/10 text-primary">
+                  {feature.highlight}
+                </Badge>
+                <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">{feature.title}</h3>
+                <p className="text-muted-foreground text-sm sm:text-base">{feature.description}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative z-10 px-6 py-24 lg:px-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="glass rounded-3xl p-12 border-primary/20">
-            <Bot className="h-16 w-16 text-primary mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Ready to Let AI Make You Money?
+      {/* Testimonials */}
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">Success Stories</Badge>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Traders <span className="text-accent">Love</span> TradeFlow
             </h2>
-            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-              Join 50,000+ traders who are already using TradeFlow's AI agents 
-              to generate passive income from crypto and stocks.
-            </p>
-            <Button 
-              size="lg" 
-              onClick={() => navigate("/auth?mode=signup")}
-              className="text-lg px-10 py-6 glow-primary"
-            >
-              Create Free Account <ChevronRight className="h-5 w-5 ml-1" />
-            </Button>
-            <p className="text-sm text-muted-foreground mt-4">
-              No credit card required • Start with $10,000 demo balance
-            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={testimonial.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
+                className="glass rounded-2xl p-6 sm:p-8"
+              >
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-foreground mb-4 italic text-sm sm:text-base">"{testimonial.quote}"</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">{testimonial.name}</p>
+                    <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                  </div>
+                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-sm">
+                    {testimonial.profit}
+                  </Badge>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative z-10 px-6 py-8 lg:px-12 border-t border-border">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-primary" />
-            <span className="font-semibold text-foreground">TradeFlow</span>
+      {/* Final CTA Section */}
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-4xl mx-auto"
+        >
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/20 via-card to-accent/10 border border-primary/30 p-8 sm:p-12 lg:p-16">
+            {/* Decorative elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[100px]" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent/20 rounded-full blur-[80px]" />
+            
+            <div className="relative text-center">
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="inline-block"
+              >
+                <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-accent mx-auto mb-6 sm:mb-8">
+                  <Rocket className="h-8 w-8 sm:h-10 sm:w-10 text-primary-foreground" />
+                </div>
+              </motion.div>
+              
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6">
+                Ready to Let AI Make You Money?
+              </h2>
+              <p className="text-muted-foreground mb-6 sm:mb-8 max-w-xl mx-auto text-base sm:text-lg">
+                Join traders worldwide who are using TradeFlow's AI agents 
+                to generate profits from crypto and meme coins.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button 
+                    size="lg" 
+                    onClick={handleSignup}
+                    className="h-14 text-lg px-8 sm:px-10 bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold shadow-xl shadow-primary/30 rounded-xl w-full sm:w-auto"
+                  >
+                    Create Free Account <ArrowRight className="h-5 w-5 ml-2" />
+                  </Button>
+                </motion.div>
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  onClick={() => navigate("/auth")}
+                  className="h-14 text-lg px-8 rounded-xl border-border/50"
+                >
+                  Sign In
+                </Button>
+              </div>
+              
+              <p className="text-sm text-muted-foreground mt-6 flex flex-wrap items-center justify-center gap-4">
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="h-4 w-4 text-primary" />
+                  No credit card
+                </span>
+                <span className="flex items-center gap-1">
+                  <Lock className="h-4 w-4 text-primary" />
+                  Bank-grade security
+                </span>
+                <span className="flex items-center gap-1">
+                  <Zap className="h-4 w-4 text-primary" />
+                  Start instantly
+                </span>
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground">
-            © 2024 TradeFlow. AI-powered trading for everyone.
-          </p>
+        </motion.div>
+      </section>
+
+      {/* Footer */}
+      <footer className="relative z-10 px-4 sm:px-6 py-8 lg:px-12 border-t border-border/50">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+              <BarChart3 className="h-5 w-5 text-primary-foreground" />
+            </div>
+            <div>
+              <span className="font-semibold text-foreground">TradeFlow</span>
+              <p className="text-xs text-muted-foreground">by Cardinal Consulting</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
+            <span>Created by Hunain Qureshi</span>
+            <span className="hidden sm:inline">•</span>
+            <span>© 2024 TradeFlow</span>
+          </div>
         </div>
       </footer>
+
+      {/* CSS for gradient animation */}
+      <style>{`
+        @keyframes gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}</style>
     </div>
   );
 };

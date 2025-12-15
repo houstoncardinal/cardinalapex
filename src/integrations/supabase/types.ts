@@ -59,6 +59,98 @@ export type Database = {
         }
         Relationships: []
       }
+      copy_trading: {
+        Row: {
+          allocation_percentage: number | null
+          created_at: string
+          follower_user_id: string
+          id: string
+          is_active: boolean | null
+          max_trade_size: number | null
+          total_copied_trades: number | null
+          total_pnl: number | null
+          trader_id: string
+          updated_at: string
+        }
+        Insert: {
+          allocation_percentage?: number | null
+          created_at?: string
+          follower_user_id: string
+          id?: string
+          is_active?: boolean | null
+          max_trade_size?: number | null
+          total_copied_trades?: number | null
+          total_pnl?: number | null
+          trader_id: string
+          updated_at?: string
+        }
+        Update: {
+          allocation_percentage?: number | null
+          created_at?: string
+          follower_user_id?: string
+          id?: string
+          is_active?: boolean | null
+          max_trade_size?: number | null
+          total_copied_trades?: number | null
+          total_pnl?: number | null
+          trader_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "copy_trading_trader_id_fkey"
+            columns: ["trader_id"]
+            isOneToOne: false
+            referencedRelation: "top_traders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dca_strategies: {
+        Row: {
+          amount_per_interval: number
+          created_at: string
+          id: string
+          interval_type: string
+          is_active: boolean | null
+          last_execution: string | null
+          next_execution: string | null
+          token_symbol: string
+          total_invested: number | null
+          total_tokens_bought: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount_per_interval: number
+          created_at?: string
+          id?: string
+          interval_type: string
+          is_active?: boolean | null
+          last_execution?: string | null
+          next_execution?: string | null
+          token_symbol: string
+          total_invested?: number | null
+          total_tokens_bought?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount_per_interval?: number
+          created_at?: string
+          id?: string
+          interval_type?: string
+          is_active?: boolean | null
+          last_execution?: string | null
+          next_execution?: string | null
+          token_symbol?: string
+          total_invested?: number | null
+          total_tokens_bought?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       portfolio_holdings: {
         Row: {
           average_buy_price: number
@@ -163,6 +255,113 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      top_traders: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string
+          followers_count: number | null
+          id: string
+          is_public: boolean | null
+          strategy_description: string | null
+          total_pnl: number | null
+          total_trades: number | null
+          updated_at: string
+          user_id: string
+          win_rate: number | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name: string
+          followers_count?: number | null
+          id?: string
+          is_public?: boolean | null
+          strategy_description?: string | null
+          total_pnl?: number | null
+          total_trades?: number | null
+          updated_at?: string
+          user_id: string
+          win_rate?: number | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string
+          followers_count?: number | null
+          id?: string
+          is_public?: boolean | null
+          strategy_description?: string | null
+          total_pnl?: number | null
+          total_trades?: number | null
+          updated_at?: string
+          user_id?: string
+          win_rate?: number | null
+        }
+        Relationships: []
+      }
+      trade_journal: {
+        Row: {
+          created_at: string
+          emotion: string | null
+          entry_price: number | null
+          exit_price: number | null
+          id: string
+          lessons_learned: string | null
+          market_condition: string | null
+          notes: string | null
+          pnl: number | null
+          screenshot_urls: string[] | null
+          strategy_tags: string[] | null
+          title: string
+          trade_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          emotion?: string | null
+          entry_price?: number | null
+          exit_price?: number | null
+          id?: string
+          lessons_learned?: string | null
+          market_condition?: string | null
+          notes?: string | null
+          pnl?: number | null
+          screenshot_urls?: string[] | null
+          strategy_tags?: string[] | null
+          title: string
+          trade_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          emotion?: string | null
+          entry_price?: number | null
+          exit_price?: number | null
+          id?: string
+          lessons_learned?: string | null
+          market_condition?: string | null
+          notes?: string | null
+          pnl?: number | null
+          screenshot_urls?: string[] | null
+          strategy_tags?: string[] | null
+          title?: string
+          trade_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trade_journal_trade_id_fkey"
+            columns: ["trade_id"]
+            isOneToOne: false
+            referencedRelation: "trades"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       trades: {
         Row: {

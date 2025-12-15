@@ -20,6 +20,7 @@ import { LiveTradingActivity } from "@/components/dashboard/LiveTradingActivity"
 import { PortfolioPnLChart } from "@/components/dashboard/PortfolioPnLChart";
 import { TradingAnalytics } from "@/components/dashboard/TradingAnalytics";
 import { PortfolioRebalancing } from "@/components/dashboard/PortfolioRebalancing";
+import { RiskDisclaimer, TradingWarningFooter } from "@/components/dashboard/RiskDisclaimer";
 import TradingAssistant from "@/components/dashboard/TradingAssistant";
 import TradingRobots from "@/components/dashboard/TradingRobots";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -52,6 +53,9 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
+      {/* Risk Warning Banner */}
+      <RiskDisclaimer variant="banner" />
+      
       <Header />
       
       <main className="container mx-auto px-3 sm:px-4 py-4 md:py-6 space-y-4 md:space-y-6 max-w-[1800px]">
@@ -64,6 +68,9 @@ const Dashboard = () => {
             </AlertDescription>
           </Alert>
         )}
+
+        {/* Risk Disclosure Card */}
+        <RiskDisclaimer variant="card" />
 
         {/* Meme Coin Ticker - Full Width */}
         <ErrorBoundary fallbackMessage="Failed to load meme coin ticker">
@@ -175,6 +182,9 @@ const Dashboard = () => {
             <TradesHistory />
           </ErrorBoundary>
         </div>
+        
+        {/* Trading Warning Footer */}
+        <TradingWarningFooter />
       </main>
       
       {/* Mobile Bottom Toolbar */}

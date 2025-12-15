@@ -59,6 +59,60 @@ export type Database = {
         }
         Relationships: []
       }
+      backtest_results: {
+        Row: {
+          created_at: string
+          end_date: string
+          final_capital: number
+          id: string
+          initial_capital: number
+          max_drawdown: number
+          parameters: Json | null
+          sharpe_ratio: number | null
+          start_date: string
+          strategy_name: string
+          token_symbol: string
+          total_return: number
+          total_trades: number
+          user_id: string
+          win_rate: number
+        }
+        Insert: {
+          created_at?: string
+          end_date: string
+          final_capital: number
+          id?: string
+          initial_capital: number
+          max_drawdown: number
+          parameters?: Json | null
+          sharpe_ratio?: number | null
+          start_date: string
+          strategy_name: string
+          token_symbol: string
+          total_return: number
+          total_trades: number
+          user_id: string
+          win_rate: number
+        }
+        Update: {
+          created_at?: string
+          end_date?: string
+          final_capital?: number
+          id?: string
+          initial_capital?: number
+          max_drawdown?: number
+          parameters?: Json | null
+          sharpe_ratio?: number | null
+          start_date?: string
+          strategy_name?: string
+          token_symbol?: string
+          total_return?: number
+          total_trades?: number
+          user_id?: string
+          win_rate?: number
+        }
+        Relationships: []
+      }
       copy_trading: {
         Row: {
           allocation_percentage: number | null
@@ -148,6 +202,96 @@ export type Database = {
           total_tokens_bought?: number | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      leaderboard: {
+        Row: {
+          avatar_url: string | null
+          badge: string | null
+          best_trade: number | null
+          created_at: string
+          display_name: string
+          id: string
+          is_public: boolean | null
+          rank_position: number | null
+          streak_days: number | null
+          total_pnl: number | null
+          total_trades: number | null
+          updated_at: string
+          user_id: string
+          win_rate: number | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          badge?: string | null
+          best_trade?: number | null
+          created_at?: string
+          display_name: string
+          id?: string
+          is_public?: boolean | null
+          rank_position?: number | null
+          streak_days?: number | null
+          total_pnl?: number | null
+          total_trades?: number | null
+          updated_at?: string
+          user_id: string
+          win_rate?: number | null
+        }
+        Update: {
+          avatar_url?: string | null
+          badge?: string | null
+          best_trade?: number | null
+          created_at?: string
+          display_name?: string
+          id?: string
+          is_public?: boolean | null
+          rank_position?: number | null
+          streak_days?: number | null
+          total_pnl?: number | null
+          total_trades?: number | null
+          updated_at?: string
+          user_id?: string
+          win_rate?: number | null
+        }
+        Relationships: []
+      }
+      notification_webhooks: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean | null
+          notify_alerts: boolean | null
+          notify_dca: boolean | null
+          notify_trades: boolean | null
+          updated_at: string
+          user_id: string
+          webhook_type: string
+          webhook_url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          notify_alerts?: boolean | null
+          notify_dca?: boolean | null
+          notify_trades?: boolean | null
+          updated_at?: string
+          user_id: string
+          webhook_type: string
+          webhook_url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          notify_alerts?: boolean | null
+          notify_dca?: boolean | null
+          notify_trades?: boolean | null
+          updated_at?: string
+          user_id?: string
+          webhook_type?: string
+          webhook_url?: string
         }
         Relationships: []
       }

@@ -5,13 +5,36 @@ import {
   Bot, TrendingUp, Zap, Shield, ChevronRight, BarChart3, Wallet, ArrowUpRight,
   LineChart, Lock, Globe, Cpu, Target, Award, Users, Clock, CheckCircle2,
   Sparkles, Play, ArrowRight, Star, Activity, Eye, Layers, Rocket, Check,
-  HelpCircle, Crown, Diamond
+  HelpCircle, Crown, Diamond, X, Video, DollarSign, TrendingDown, Minus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+
+// Comparison data for the table
+const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual: boolean | "partial"; others: boolean | "partial" }[] = [
+  { feature: "24/7 Market Analysis", tradeflow: true, manual: false, others: "partial" },
+  { feature: "Sub-millisecond Execution", tradeflow: true, manual: false, others: false },
+  { feature: "AI Pattern Recognition", tradeflow: true, manual: false, others: "partial" },
+  { feature: "Smart Money Flow Detection", tradeflow: true, manual: false, others: false },
+  { feature: "Automatic Stop-Loss", tradeflow: true, manual: "partial", others: true },
+  { feature: "Multi-Strategy Bots", tradeflow: true, manual: false, others: "partial" },
+  { feature: "Real-time Risk Management", tradeflow: true, manual: false, others: "partial" },
+  { feature: "Solana Integration", tradeflow: true, manual: true, others: "partial" },
+  { feature: "No Coding Required", tradeflow: true, manual: true, others: false },
+  { feature: "Copy Trading", tradeflow: true, manual: false, others: true },
+];
+
+// Live stats for social proof
+const liveStats = [
+  { label: "Active Traders", value: 12847, prefix: "", suffix: "+", icon: Users },
+  { label: "Trades Executed", value: 2847632, prefix: "", suffix: "", icon: Activity },
+  { label: "Total Profits", value: 47800000, prefix: "$", suffix: "", icon: DollarSign },
+  { label: "Win Rate", value: 94, prefix: "", suffix: "%", icon: TrendingUp },
+];
 
 const features = [
   {
@@ -161,12 +184,45 @@ const faqItems = [
   },
 ];
 
+// Animated counter component
+const AnimatedCounter = ({ value, prefix = "", suffix = "" }: { value: number; prefix?: string; suffix?: string }) => {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    const duration = 2000;
+    const steps = 60;
+    const increment = value / steps;
+    let current = 0;
+    
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= value) {
+        setCount(value);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, duration / steps);
+    
+    return () => clearInterval(timer);
+  }, [value]);
+  
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) return (num / 1000000).toFixed(1) + "M";
+    if (num >= 1000) return (num / 1000).toFixed(num >= 10000 ? 0 : 1) + "K";
+    return num.toString();
+  };
+  
+  return <span>{prefix}{formatNumber(count)}{suffix}</span>;
+};
+
 const Landing = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
   const [activeBot, setActiveBot] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
   
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -343,6 +399,27 @@ const Landing = () => {
                   Start Trading Now
                 </Button>
               </motion.div>
+            </motion.div>
+
+            {/* Watch Demo Button */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="flex justify-center pt-4"
+            >
+              <motion.button
+                onClick={() => setVideoModalOpen(true)}
+                className="flex items-center gap-3 px-6 py-3 rounded-full bg-card/50 border border-border/50 hover:border-primary/50 transition-all group"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent group-hover:shadow-lg group-hover:shadow-primary/30 transition-shadow">
+                  <Play className="h-4 w-4 text-primary-foreground ml-0.5" />
+                </div>
+                <span className="text-foreground font-medium">Watch AI Trade Live</span>
+                <span className="text-xs text-muted-foreground">(2 min)</span>
+              </motion.button>
             </motion.div>
 
             {/* Trust Indicators */}
@@ -546,6 +623,58 @@ const Landing = () => {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Social Proof Stats Section */}
+      <section className="relative z-10 px-4 sm:px-6 py-12 sm:py-16 lg:px-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-6xl mx-auto"
+        >
+          <div className="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 border-primary/20">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+              {liveStats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="flex justify-center mb-3">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30">
+                      <stat.icon className="h-6 w-6 text-primary" />
+                    </div>
+                  </div>
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-1">
+                    <AnimatedCounter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
+                  </div>
+                  <p className="text-sm text-muted-foreground">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
+            
+            <div className="mt-8 pt-8 border-t border-border/50">
+              <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  <span>Live data updated every second</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Globe className="h-4 w-4 text-primary" />
+                  <span>Traders from 150+ countries</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Shield className="h-4 w-4 text-primary" />
+                  <span>$500M+ secured assets</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
 
       {/* How It Works */}
       <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
@@ -781,6 +910,137 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* Comparison Table Section */}
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 bg-gradient-to-b from-background to-secondary/30">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">Why TradeFlow</Badge>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
+              TradeFlow vs <span className="text-primary">The Competition</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-base sm:text-lg">
+              See why thousands of traders choose TradeFlow over manual trading and other platforms
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="glass rounded-2xl overflow-hidden border-primary/20"
+          >
+            {/* Table Header */}
+            <div className="grid grid-cols-4 bg-gradient-to-r from-primary/10 to-accent/10 border-b border-border/50">
+              <div className="p-4 sm:p-6 font-semibold text-foreground text-sm sm:text-base">Feature</div>
+              <div className="p-4 sm:p-6 text-center">
+                <div className="flex flex-col items-center gap-1">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+                    <BarChart3 className="h-4 w-4 text-primary-foreground" />
+                  </div>
+                  <span className="font-bold text-primary text-sm sm:text-base">TradeFlow</span>
+                </div>
+              </div>
+              <div className="p-4 sm:p-6 text-center">
+                <div className="flex flex-col items-center gap-1">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
+                    <Users className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  <span className="font-medium text-muted-foreground text-sm sm:text-base">Manual</span>
+                </div>
+              </div>
+              <div className="p-4 sm:p-6 text-center">
+                <div className="flex flex-col items-center gap-1">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
+                    <Bot className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  <span className="font-medium text-muted-foreground text-sm sm:text-base">Others</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Table Body */}
+            {comparisonData.map((row, index) => (
+              <motion.div
+                key={row.feature}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+                className={cn(
+                  "grid grid-cols-4 border-b border-border/30 hover:bg-primary/5 transition-colors",
+                  index === comparisonData.length - 1 && "border-b-0"
+                )}
+              >
+                <div className="p-4 sm:p-5 text-sm text-foreground">{row.feature}</div>
+                <div className="p-4 sm:p-5 flex justify-center">
+                  {row.tradeflow === true ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-green-500/20">
+                      <Check className="h-4 w-4 text-green-500" />
+                    </div>
+                  ) : row.tradeflow === "partial" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-yellow-500/20">
+                      <Minus className="h-4 w-4 text-yellow-500" />
+                    </div>
+                  ) : (
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-red-500/20">
+                      <X className="h-4 w-4 text-red-500" />
+                    </div>
+                  )}
+                </div>
+                <div className="p-4 sm:p-5 flex justify-center">
+                  {row.manual === true ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-green-500/20">
+                      <Check className="h-4 w-4 text-green-500" />
+                    </div>
+                  ) : row.manual === "partial" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-yellow-500/20">
+                      <Minus className="h-4 w-4 text-yellow-500" />
+                    </div>
+                  ) : (
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-red-500/20">
+                      <X className="h-4 w-4 text-red-500" />
+                    </div>
+                  )}
+                </div>
+                <div className="p-4 sm:p-5 flex justify-center">
+                  {row.others === true ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-green-500/20">
+                      <Check className="h-4 w-4 text-green-500" />
+                    </div>
+                  ) : row.others === "partial" ? (
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-yellow-500/20">
+                      <Minus className="h-4 w-4 text-yellow-500" />
+                    </div>
+                  ) : (
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-red-500/20">
+                      <X className="h-4 w-4 text-red-500" />
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-8 text-center"
+          >
+            <p className="text-sm text-muted-foreground mb-4">
+              <Check className="h-4 w-4 inline text-green-500 mr-1" /> Full support
+              <Minus className="h-4 w-4 inline text-yellow-500 mx-1 ml-4" /> Partial support
+              <X className="h-4 w-4 inline text-red-500 mx-1 ml-4" /> Not available
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
         <div className="max-w-3xl mx-auto">
@@ -917,6 +1177,83 @@ const Landing = () => {
           </div>
         </div>
       </footer>
+
+      {/* Video Modal */}
+      <Dialog open={videoModalOpen} onOpenChange={setVideoModalOpen}>
+        <DialogContent className="max-w-4xl w-[95vw] p-0 bg-background border-primary/20 overflow-hidden">
+          <div className="relative">
+            {/* Close button */}
+            <button
+              onClick={() => setVideoModalOpen(false)}
+              className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background transition-colors"
+            >
+              <X className="h-5 w-5 text-foreground" />
+            </button>
+            
+            {/* Video container */}
+            <div className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10 relative">
+              {/* Placeholder for actual video - replace with real video embed */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="text-center"
+                >
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent mx-auto mb-6">
+                    <Play className="h-10 w-10 text-primary-foreground ml-1" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-foreground mb-2">AI Trading Demo</h3>
+                  <p className="text-muted-foreground max-w-md mx-auto mb-6">
+                    Watch our AI agents detect patterns and execute profitable trades in real-time
+                  </p>
+                  
+                  {/* Simulated video preview with trading animation */}
+                  <div className="glass rounded-xl p-4 max-w-lg mx-auto">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
+                        <span className="text-sm text-foreground font-medium">Live Trading Session</span>
+                      </div>
+                      <Badge className="bg-primary/20 text-primary text-xs">Demo Mode</Badge>
+                    </div>
+                    
+                    <div className="h-32 relative rounded-lg bg-background/50 overflow-hidden mb-4">
+                      <svg className="w-full h-full" viewBox="0 0 300 100" preserveAspectRatio="none">
+                        <motion.path
+                          d="M0,70 Q30,60 60,50 T120,40 T180,30 T240,35 T300,20"
+                          fill="none"
+                          stroke="hsl(var(--primary))"
+                          strokeWidth="2"
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                        />
+                      </svg>
+                      <motion.div
+                        className="absolute top-4 right-4 glass rounded-md px-2 py-1 text-xs"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 1, repeat: Infinity, repeatDelay: 2 }}
+                      >
+                        <span className="text-green-400 font-semibold">+8.2%</span>
+                      </motion.div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-muted-foreground">Pattern: Head & Shoulders</span>
+                      <span className="text-primary font-medium">Confidence: 94%</span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-xs text-muted-foreground mt-4">
+                    Full video coming soon • Sign up for early access
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* CSS for gradient animation */}
       <style>{`

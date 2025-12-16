@@ -13,6 +13,9 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { FloatingNav } from "@/components/landing/FloatingNav";
+import { ChatWidget } from "@/components/landing/ChatWidget";
+import { TrustBadges } from "@/components/landing/TrustBadges";
 
 // Comparison data for the table
 const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual: boolean | "partial"; others: boolean | "partial" }[] = [
@@ -241,7 +244,10 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
+    <div className="min-h-screen bg-background overflow-hidden scroll-smooth">
+      {/* Floating Navigation */}
+      <FloatingNav />
+
       {/* Animated background with multiple layers */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_hsl(var(--primary)/0.15)_0%,_transparent_50%)]" />
@@ -677,7 +683,7 @@ const Landing = () => {
       </section>
 
       {/* How It Works */}
-      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
+      <section id="how-it-works" className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -724,7 +730,7 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 bg-gradient-to-b from-secondary/30 to-background">
+      <section id="features" className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 bg-gradient-to-b from-secondary/30 to-background">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -820,7 +826,7 @@ const Landing = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 bg-gradient-to-b from-background to-secondary/30">
+      <section id="pricing" className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 bg-gradient-to-b from-background to-secondary/30">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -911,7 +917,7 @@ const Landing = () => {
       </section>
 
       {/* Comparison Table Section */}
-      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 bg-gradient-to-b from-background to-secondary/30">
+      <section id="comparison" className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 bg-gradient-to-b from-background to-secondary/30">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -1042,7 +1048,7 @@ const Landing = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
+      <section id="faq" className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
         <div className="max-w-3xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -1086,6 +1092,9 @@ const Landing = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Trust Badges Section */}
+      <TrustBadges />
 
       {/* Final CTA Section */}
       <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
@@ -1254,6 +1263,9 @@ const Landing = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Chat Widget */}
+      <ChatWidget />
 
       {/* CSS for gradient animation */}
       <style>{`

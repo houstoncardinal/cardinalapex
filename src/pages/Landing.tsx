@@ -4,11 +4,13 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { 
   Bot, TrendingUp, Zap, Shield, ChevronRight, BarChart3, Wallet, ArrowUpRight,
   LineChart, Lock, Globe, Cpu, Target, Award, Users, Clock, CheckCircle2,
-  Sparkles, Play, ArrowRight, Star, Activity, Eye, Layers, Rocket
+  Sparkles, Play, ArrowRight, Star, Activity, Eye, Layers, Rocket, Check,
+  HelpCircle, Crown, Diamond
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 
 const features = [
@@ -72,6 +74,91 @@ const steps = [
   { step: 1, title: "Connect Your Wallet", description: "Link your Phantom wallet securely in one click", icon: Wallet },
   { step: 2, title: "Choose Your Strategy", description: "Select from aggressive, balanced, or conservative AI bots", icon: Bot },
   { step: 3, title: "Watch AI Trade", description: "Sit back while AI executes profitable trades 24/7", icon: Eye },
+];
+
+const pricingPlans = [
+  {
+    name: "Starter",
+    price: "Free",
+    description: "Perfect for exploring AI trading",
+    icon: Rocket,
+    features: [
+      "1 AI Trading Bot",
+      "Basic Pattern Detection",
+      "5 Trades per Day",
+      "Email Alerts",
+      "Community Support",
+    ],
+    cta: "Start Free",
+    popular: false,
+  },
+  {
+    name: "Pro",
+    price: "$49",
+    period: "/month",
+    description: "For serious traders",
+    icon: Crown,
+    features: [
+      "Unlimited AI Bots",
+      "Advanced Pattern Recognition",
+      "Unlimited Trades",
+      "Real-time Alerts",
+      "Priority Support",
+      "Copy Trading Access",
+      "Custom Strategies",
+    ],
+    cta: "Go Pro",
+    popular: true,
+  },
+  {
+    name: "Elite",
+    price: "$149",
+    period: "/month",
+    description: "Maximum profit potential",
+    icon: Diamond,
+    features: [
+      "Everything in Pro",
+      "VIP Signal Groups",
+      "1-on-1 Strategy Calls",
+      "Early Access Features",
+      "White-Glove Onboarding",
+      "Dedicated Account Manager",
+      "Custom API Access",
+    ],
+    cta: "Go Elite",
+    popular: false,
+  },
+];
+
+const faqItems = [
+  {
+    question: "How does AI trading actually work?",
+    answer: "Our AI trading bots use advanced machine learning algorithms to analyze market patterns, technical indicators, and smart money flows in real-time. When high-confidence trading opportunities are detected (85%+ confidence), the AI automatically executes trades on your behalf through your connected Phantom wallet on the Solana blockchain.",
+  },
+  {
+    question: "Is my money safe with AI trading?",
+    answer: "Absolutely. Your funds remain in your own Phantom wallet at all times - we never have custody of your assets. Our AI includes built-in risk management with automatic stop-losses, position sizing limits, and portfolio protection. Bank-grade encryption protects all your data and API connections.",
+  },
+  {
+    question: "What returns can I expect?",
+    answer: "While past performance doesn't guarantee future results, our top AI bots have historically achieved 89-94% win rates. Returns vary based on market conditions, strategy selection, and risk tolerance settings. Our aggressive growth bots are designed for maximum profit potential, while conservative options prioritize capital preservation.",
+  },
+  {
+    question: "Do I need trading experience?",
+    answer: "Not at all! TradeFlow is designed to be beginner-friendly. Simply connect your wallet, choose an AI trading strategy (aggressive, balanced, or conservative), and let the AI handle everything. Our visual dashboard shows you exactly what the AI is doing in real-time, so you can learn while you earn.",
+  },
+  {
+    question: "Which cryptocurrencies can I trade?",
+    answer: "TradeFlow supports trading on the Solana blockchain, including SOL, popular meme coins (PEPE, SHIB, FLOKI, DOGE, BONK, WIF), and 500+ other tokens. Our AI constantly scans for the best opportunities across all supported assets.",
+  },
+  {
+    question: "Can I stop the AI at any time?",
+    answer: "Yes, you have full control. You can pause, stop, or modify your AI bots instantly from the dashboard. Any open positions can be manually closed, and you can adjust risk settings, trade limits, and strategy parameters at any time.",
+  },
+  {
+    question: "What makes TradeFlow different from other trading bots?",
+    answer: "TradeFlow combines institutional-grade pattern recognition (Head & Shoulders, Elliott Waves, Wyckoff analysis) with real-time smart money flow tracking and lightning-fast Solana execution. Our AI detects opportunities that human traders miss, with sub-millisecond execution speeds that ensure you never miss a trade.",
+  },
 ];
 
 const Landing = () => {
@@ -280,59 +367,181 @@ const Landing = () => {
             </motion.div>
           </div>
 
-          {/* Live Trading Bot Preview */}
+          {/* 3D Trading Visualization */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.6 }}
             className="mt-12 sm:mt-16"
           >
-            <div className="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto border-primary/20">
-              <div className="flex items-center justify-between mb-4 sm:mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
-                    <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-primary-foreground" />
+            <div className="relative max-w-5xl mx-auto" style={{ perspective: "1000px" }}>
+              {/* 3D Card Container */}
+              <motion.div
+                className="relative"
+                animate={{ rotateX: [0, 2, 0], rotateY: [-2, 2, -2] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                {/* Main Dashboard Card */}
+                <div className="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border-primary/20 relative overflow-hidden">
+                  {/* Animated scan line */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent h-20"
+                    animate={{ y: [-80, 400, -80] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  
+                  <div className="flex items-center justify-between mb-4 sm:mb-6 relative z-10">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
+                        <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-primary-foreground" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-foreground text-sm sm:text-base">AI Trading Dashboard</h3>
+                        <p className="text-xs sm:text-sm text-muted-foreground">Real-time execution</p>
+                      </div>
+                    </div>
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 animate-pulse text-xs">
+                      <Activity className="h-3 w-3 mr-1" />
+                      LIVE
+                    </Badge>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground text-sm sm:text-base">Live AI Trading Bots</h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground">Real-time performance</p>
+
+                  {/* Simulated Chart */}
+                  <div className="relative h-48 sm:h-64 mb-6 rounded-xl bg-background/50 overflow-hidden">
+                    <svg className="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
+                          <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <motion.path
+                        d="M0,150 Q50,120 100,100 T200,80 T300,60 T400,30"
+                        fill="none"
+                        stroke="hsl(var(--primary))"
+                        strokeWidth="2"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ duration: 2, delay: 1 }}
+                      />
+                      <motion.path
+                        d="M0,150 Q50,120 100,100 T200,80 T300,60 T400,30 V200 H0 Z"
+                        fill="url(#chartGradient)"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 2 }}
+                      />
+                      {/* Trade markers */}
+                      {[
+                        { cx: 100, cy: 100, type: "buy" },
+                        { cx: 200, cy: 80, type: "buy" },
+                        { cx: 300, cy: 60, type: "sell" },
+                      ].map((trade, i) => (
+                        <motion.g key={i}>
+                          <motion.circle
+                            cx={trade.cx}
+                            cy={trade.cy}
+                            r="8"
+                            fill={trade.type === "buy" ? "hsl(142, 76%, 36%)" : "hsl(0, 84%, 60%)"}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: [0, 1.2, 1] }}
+                            transition={{ delay: 2.5 + i * 0.3, duration: 0.4 }}
+                          />
+                          <motion.circle
+                            cx={trade.cx}
+                            cy={trade.cy}
+                            r="16"
+                            fill="none"
+                            stroke={trade.type === "buy" ? "hsl(142, 76%, 36%)" : "hsl(0, 84%, 60%)"}
+                            strokeWidth="2"
+                            initial={{ scale: 0, opacity: 1 }}
+                            animate={{ scale: 2, opacity: 0 }}
+                            transition={{ delay: 2.5 + i * 0.3, duration: 1, repeat: Infinity, repeatDelay: 2 }}
+                          />
+                        </motion.g>
+                      ))}
+                    </svg>
+                    
+                    {/* Floating trade notifications */}
+                    <AnimatePresence>
+                      <motion.div
+                        className="absolute top-4 right-4 glass rounded-lg px-3 py-2 text-xs"
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 3 }}
+                      >
+                        <span className="text-green-400 font-semibold">+12.4%</span>
+                        <span className="text-muted-foreground ml-2">SOL/USDC</span>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Bot Cards */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 relative z-10">
+                    {tradingBots.map((bot, index) => (
+                      <motion.div
+                        key={bot.name}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1.2 + index * 0.1 }}
+                        className={cn(
+                          "p-4 rounded-xl transition-all duration-300 cursor-pointer",
+                          activeBot === index 
+                            ? "bg-gradient-to-br from-primary/20 to-accent/10 border border-primary/50" 
+                            : "bg-background/50 border border-border/50 hover:border-primary/30"
+                        )}
+                        onClick={() => setActiveBot(index)}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="font-semibold text-foreground text-sm">{bot.name}</span>
+                          <Badge variant="outline" className="text-[10px] text-primary border-primary/50">
+                            {bot.winRate}% Win
+                          </Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-3">{bot.strategy}</p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-muted-foreground">{bot.trades} trades</span>
+                          <span className="text-sm font-bold text-green-400">{bot.profit}</span>
+                        </div>
+                        {activeBot === index && (
+                          <motion.div
+                            className="mt-3 pt-3 border-t border-primary/20"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                          >
+                            <div className="flex items-center gap-2 text-xs text-primary">
+                              <Activity className="h-3 w-3 animate-pulse" />
+                              <span>Analyzing markets...</span>
+                            </div>
+                          </motion.div>
+                        )}
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30 animate-pulse text-xs">
-                  <Activity className="h-3 w-3 mr-1" />
-                  LIVE
-                </Badge>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
-                {tradingBots.map((bot, index) => (
-                  <motion.div
-                    key={bot.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1 + index * 0.1 }}
-                    className={cn(
-                      "p-4 rounded-xl transition-all duration-300 cursor-pointer",
-                      activeBot === index 
-                        ? "bg-gradient-to-br from-primary/20 to-accent/10 border border-primary/50" 
-                        : "bg-background/50 border border-border/50 hover:border-primary/30"
-                    )}
-                    onClick={() => setActiveBot(index)}
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="font-semibold text-foreground text-sm">{bot.name}</span>
-                      <Badge variant="outline" className="text-[10px] text-primary border-primary/50">
-                        {bot.winRate}% Win
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground mb-3">{bot.strategy}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">{bot.trades} trades</span>
-                      <span className="text-sm font-bold text-green-400">{bot.profit}</span>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+                {/* 3D Floating Elements */}
+                <motion.div
+                  className="absolute -top-4 -right-4 glass rounded-xl px-4 py-2 text-sm"
+                  animate={{ y: [0, -10, 0], rotateZ: [0, 2, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  style={{ transform: "translateZ(40px)" }}
+                >
+                  <span className="text-green-400 font-bold">+$1,247</span>
+                  <span className="text-muted-foreground ml-1">today</span>
+                </motion.div>
+
+                <motion.div
+                  className="absolute -bottom-4 -left-4 glass rounded-xl px-4 py-2 text-sm"
+                  animate={{ y: [0, 8, 0], rotateZ: [0, -2, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                  style={{ transform: "translateZ(30px)" }}
+                >
+                  <span className="text-primary font-bold">94%</span>
+                  <span className="text-muted-foreground ml-1">accuracy</span>
+                </motion.div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -478,6 +687,143 @@ const Landing = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 bg-gradient-to-b from-background to-secondary/30">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">Pricing</Badge>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Choose Your <span className="text-primary">Trading Power</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-base sm:text-lg">
+              Start free and scale as your profits grow
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
+            {pricingPlans.map((plan, index) => (
+              <motion.div
+                key={plan.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
+                className={cn(
+                  "relative glass rounded-2xl p-6 sm:p-8 transition-all duration-300",
+                  plan.popular && "border-primary/50 shadow-xl shadow-primary/10 scale-105"
+                )}
+              >
+                {plan.popular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <Badge className="bg-gradient-to-r from-primary to-accent text-primary-foreground px-4 py-1">
+                      Most Popular
+                    </Badge>
+                  </div>
+                )}
+                
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={cn(
+                    "flex h-12 w-12 items-center justify-center rounded-xl",
+                    plan.popular 
+                      ? "bg-gradient-to-br from-primary to-accent" 
+                      : "bg-secondary"
+                  )}>
+                    <plan.icon className={cn(
+                      "h-6 w-6",
+                      plan.popular ? "text-primary-foreground" : "text-primary"
+                    )} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
+                    <p className="text-xs text-muted-foreground">{plan.description}</p>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-foreground">{plan.price}</span>
+                  {plan.period && <span className="text-muted-foreground">{plan.period}</span>}
+                </div>
+
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm">
+                      <Check className="h-4 w-4 text-primary flex-shrink-0" />
+                      <span className="text-muted-foreground">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button 
+                    className={cn(
+                      "w-full h-12",
+                      plan.popular 
+                        ? "bg-gradient-to-r from-primary to-accent text-primary-foreground" 
+                        : "bg-secondary text-foreground hover:bg-secondary/80"
+                    )}
+                    onClick={handleSignup}
+                  >
+                    {plan.cta}
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
+        <div className="max-w-3xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <Badge variant="outline" className="mb-4 text-accent border-accent/30">FAQ</Badge>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Common <span className="text-primary">Questions</span>
+            </h2>
+            <p className="text-muted-foreground text-base sm:text-lg">
+              Everything you need to know about AI trading
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqItems.map((item, index) => (
+                <AccordionItem 
+                  key={index} 
+                  value={`item-${index}`}
+                  className="glass rounded-xl px-6 border-none"
+                >
+                  <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
+                    <div className="flex items-center gap-3">
+                      <HelpCircle className="h-5 w-5 text-primary flex-shrink-0" />
+                      <span className="font-medium">{item.question}</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5 pl-8">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </motion.div>
         </div>
       </section>
 

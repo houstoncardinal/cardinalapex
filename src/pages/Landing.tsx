@@ -26,6 +26,7 @@ import MobileAppDownload from "@/components/landing/MobileAppDownload";
 import NewsletterSignup from "@/components/landing/NewsletterSignup";
 import MarketTicker from "@/components/landing/MarketTicker";
 import ComparisonSlider from "@/components/landing/ComparisonSlider";
+import VideoTestimonials from "@/components/landing/VideoTestimonials";
 
 // Comparison data for the table
 const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual: boolean | "partial"; others: boolean | "partial" }[] = [
@@ -839,6 +840,9 @@ const Landing = () => {
           </div>
         </div>
       </section>
+
+      {/* Video Testimonials */}
+      <VideoTestimonials />
 
       {/* Comparison Slider */}
       <ComparisonSlider />

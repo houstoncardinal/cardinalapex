@@ -22,6 +22,8 @@ import { LiveTradeNotifications } from "@/components/landing/LiveTradeNotificati
 import { ReferralProgram } from "@/components/landing/ReferralProgram";
 import { TradingSimulator } from "@/components/landing/TradingSimulator";
 import { CountdownTimer } from "@/components/landing/CountdownTimer";
+import MobileAppDownload from "@/components/landing/MobileAppDownload";
+import NewsletterSignup from "@/components/landing/NewsletterSignup";
 
 // Comparison data for the table
 const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual: boolean | "partial"; others: boolean | "partial" }[] = [
@@ -1287,6 +1289,12 @@ const Landing = () => {
 
       {/* Live Trade Notifications */}
       <LiveTradeNotifications />
+
+      {/* Mobile App Download */}
+      <MobileAppDownload />
+
+      {/* Newsletter Signup */}
+      <NewsletterSignup />
 
       {/* Chat Widget */}
       <ChatWidget />

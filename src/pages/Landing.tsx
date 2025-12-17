@@ -24,6 +24,8 @@ import { TradingSimulator } from "@/components/landing/TradingSimulator";
 import { CountdownTimer } from "@/components/landing/CountdownTimer";
 import MobileAppDownload from "@/components/landing/MobileAppDownload";
 import NewsletterSignup from "@/components/landing/NewsletterSignup";
+import MarketTicker from "@/components/landing/MarketTicker";
+import ComparisonSlider from "@/components/landing/ComparisonSlider";
 
 // Comparison data for the table
 const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual: boolean | "partial"; others: boolean | "partial" }[] = [
@@ -255,6 +257,11 @@ const Landing = () => {
     <div className="min-h-screen bg-background overflow-hidden scroll-smooth">
       {/* Floating Navigation */}
       <FloatingNav />
+
+      {/* Market Ticker */}
+      <div className="sticky top-0 z-40">
+        <MarketTicker />
+      </div>
 
       {/* Animated background with multiple layers */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
@@ -832,6 +839,9 @@ const Landing = () => {
           </div>
         </div>
       </section>
+
+      {/* Comparison Slider */}
+      <ComparisonSlider />
 
       {/* Pricing Section */}
       <section id="pricing" className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 bg-gradient-to-b from-background to-secondary/30">

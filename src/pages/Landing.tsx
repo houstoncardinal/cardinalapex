@@ -32,6 +32,8 @@ import { CaseStudies } from "@/components/landing/CaseStudies";
 import { InteractiveDemo } from "@/components/landing/InteractiveDemo";
 import SocialProofFeed from "@/components/landing/SocialProofFeed";
 import LivePerformanceDashboard from "@/components/landing/LivePerformanceDashboard";
+import TeamSection from "@/components/landing/TeamSection";
+import MarketSentiment from "@/components/landing/MarketSentiment";
 
 // Comparison data for the table
 const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual: boolean | "partial"; others: boolean | "partial" }[] = [
@@ -857,6 +859,12 @@ const Landing = () => {
 
       {/* Live Performance Dashboard */}
       <LivePerformanceDashboard />
+
+      {/* Market Sentiment */}
+      <MarketSentiment />
+
+      {/* Team Section */}
+      <TeamSection />
 
       {/* Interactive Demo */}
       <InteractiveDemo />

@@ -19,6 +19,9 @@ import { TrustBadges } from "@/components/landing/TrustBadges";
 import { ROICalculator } from "@/components/landing/ROICalculator";
 import { PartnerCarousel } from "@/components/landing/PartnerCarousel";
 import { LiveTradeNotifications } from "@/components/landing/LiveTradeNotifications";
+import { ReferralProgram } from "@/components/landing/ReferralProgram";
+import { TradingSimulator } from "@/components/landing/TradingSimulator";
+import { CountdownTimer } from "@/components/landing/CountdownTimer";
 
 // Comparison data for the table
 const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual: boolean | "partial"; others: boolean | "partial" }[] = [
@@ -1267,8 +1270,17 @@ const Landing = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Countdown Timer */}
+      <CountdownTimer />
+
+      {/* Trading Simulator */}
+      <TradingSimulator />
+
       {/* ROI Calculator */}
       <ROICalculator />
+
+      {/* Referral Program */}
+      <ReferralProgram />
 
       {/* Partner Carousel */}
       <PartnerCarousel />

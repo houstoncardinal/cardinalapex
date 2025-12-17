@@ -16,6 +16,9 @@ import { cn } from "@/lib/utils";
 import { FloatingNav } from "@/components/landing/FloatingNav";
 import { ChatWidget } from "@/components/landing/ChatWidget";
 import { TrustBadges } from "@/components/landing/TrustBadges";
+import { ROICalculator } from "@/components/landing/ROICalculator";
+import { PartnerCarousel } from "@/components/landing/PartnerCarousel";
+import { LiveTradeNotifications } from "@/components/landing/LiveTradeNotifications";
 
 // Comparison data for the table
 const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual: boolean | "partial"; others: boolean | "partial" }[] = [
@@ -1263,6 +1266,15 @@ const Landing = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* ROI Calculator */}
+      <ROICalculator />
+
+      {/* Partner Carousel */}
+      <PartnerCarousel />
+
+      {/* Live Trade Notifications */}
+      <LiveTradeNotifications />
 
       {/* Chat Widget */}
       <ChatWidget />

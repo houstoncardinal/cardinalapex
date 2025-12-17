@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { FloatingNav } from "@/components/landing/FloatingNav";
 import { ChatWidget } from "@/components/landing/ChatWidget";
 import { TrustBadges } from "@/components/landing/TrustBadges";
+import { FeatureTour } from "@/components/landing/FeatureTour";
 import { ROICalculator } from "@/components/landing/ROICalculator";
 import { PartnerCarousel } from "@/components/landing/PartnerCarousel";
 import { LiveTradeNotifications } from "@/components/landing/LiveTradeNotifications";
@@ -1295,8 +1296,14 @@ const Landing = () => {
       {/* ROI Calculator */}
       <ROICalculator />
 
+      {/* Feature Tour */}
+      <FeatureTour />
+
       {/* Referral Program */}
       <ReferralProgram />
+
+      {/* Trust Badges */}
+      <TrustBadges />
 
       {/* Partner Carousel */}
       <PartnerCarousel />

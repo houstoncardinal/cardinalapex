@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import { Shield, Lock, Award, Newspaper, CreditCard, Building2 } from "lucide-react";
+import { Shield, Lock, Award, Newspaper, CreditCard, Building2, CheckCircle2, FileCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const securityBadges = [
   { icon: Shield, label: "SOC 2 Certified", description: "Enterprise security" },
   { icon: Lock, label: "256-bit SSL", description: "Bank-grade encryption" },
   { icon: Award, label: "GDPR Compliant", description: "Data protection" },
+  { icon: FileCheck, label: "Smart Contract Audited", description: "CertiK verified" },
 ];
 
 const paymentPartners = [
@@ -54,7 +55,7 @@ export const TrustBadges = () => {
           <p className="text-sm text-muted-foreground text-center mb-6 uppercase tracking-wider">
             Security Certifications
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {securityBadges.map((badge, index) => (
               <motion.div
                 key={badge.label}

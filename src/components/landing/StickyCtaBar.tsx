@@ -4,14 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
-  Rocket, X, TrendingUp, Users, Zap, ArrowRight
+  Rocket, X, Zap, ArrowRight, Shield
 } from "lucide-react";
 
 const StickyCtaBar = () => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
-  const [activeTraders, setActiveTraders] = useState(12847);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,14 +22,6 @@ const StickyCtaBar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isDismissed]);
-
-  // Simulate live trader count updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveTraders(prev => prev + Math.floor(Math.random() * 3));
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
   const handleDismiss = () => {
     setIsDismissed(true);
@@ -53,43 +44,22 @@ const StickyCtaBar = () => {
           <div className="bg-card/95 backdrop-blur-xl border-t border-border/50 shadow-2xl shadow-black/20">
             <div className="container mx-auto px-4 py-3">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-                {/* Left side - Stats */}
+                {/* Left side - Value props */}
                 <div className="flex items-center gap-4 sm:gap-6">
-                  <div className="hidden md:flex items-center gap-2">
-                    <div className="flex -space-x-2">
-                      {["M", "S", "J", "K"].map((initial, i) => (
-                        <motion.div
-                          key={initial}
-                          initial={{ scale: 0, x: -10 }}
-                          animate={{ scale: 1, x: 0 }}
-                          transition={{ delay: i * 0.1 }}
-                          className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-xs font-bold text-primary-foreground border-2 border-background"
-                        >
-                          {initial}
-                        </motion.div>
-                      ))}
-                    </div>
-                    <div className="text-sm">
-                      <span className="text-foreground font-semibold">{activeTraders.toLocaleString()}</span>
-                      <span className="text-muted-foreground"> traders online</span>
-                    </div>
-                  </div>
-
                   <div className="flex items-center gap-4">
-                    <motion.div 
-                      className="flex items-center gap-1.5 text-sm"
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
-                      <TrendingUp className="w-4 h-4 text-green-500" />
-                      <span className="text-green-500 font-semibold">+$47.8M</span>
-                      <span className="text-muted-foreground hidden sm:inline">profits today</span>
-                    </motion.div>
-
-                    <Badge className="bg-primary/20 text-primary border-primary/30 text-xs animate-pulse">
+                    <Badge className="bg-primary/20 text-primary border-primary/30 text-xs">
                       <Zap className="w-3 h-3 mr-1" />
-                      94% Win Rate
+                      Early Access
                     </Badge>
+
+                    <div className="hidden md:flex items-center gap-1.5 text-sm">
+                      <Shield className="w-4 h-4 text-primary" />
+                      <span className="text-muted-foreground">Non-custodial</span>
+                    </div>
+
+                    <div className="hidden lg:flex items-center gap-1.5 text-sm">
+                      <span className="text-muted-foreground">500+ Tokens</span>
+                    </div>
                   </div>
                 </div>
 

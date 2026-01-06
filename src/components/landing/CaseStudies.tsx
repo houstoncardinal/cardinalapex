@@ -3,84 +3,89 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { TrendingUp, Calendar, Target, DollarSign, ChevronRight, ChevronLeft, Trophy, Zap, BarChart3 } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Lightbulb, Bot, Shield, Zap, BarChart3 } from 'lucide-react';
 
-const caseStudies = [
+const roadmapPhases = [
   {
     id: 1,
-    name: "Marcus Chen",
-    title: "Day Trader",
-    avatar: "MC",
-    location: "San Francisco, CA",
-    joinDate: "January 2024",
-    initialInvestment: 5000,
-    currentPortfolio: 47500,
-    returnPercent: 850,
-    tradingStyle: "Aggressive Growth",
-    favoriteFeature: "AI Pattern Detection",
-    timeline: [
-      { month: "Month 1", event: "Started with AI Scalper bot", profit: 1200 },
-      { month: "Month 2", event: "Added Swing Trader bot", profit: 3500 },
-      { month: "Month 3", event: "First major win on BONK", profit: 8000 },
-      { month: "Month 4", event: "Portfolio diversification", profit: 12000 },
-      { month: "Month 5", event: "Compound growth kicks in", profit: 17800 },
+    phase: "Phase 1",
+    title: "Foundation",
+    status: "current",
+    description: "Core platform development and early access launch",
+    features: [
+      { name: "AI Pattern Recognition Engine", status: "complete" },
+      { name: "Phantom Wallet Integration", status: "complete" },
+      { name: "6 Trading Bot Strategies", status: "complete" },
+      { name: "Basic Risk Management", status: "complete" },
+      { name: "Early Access Program", status: "active" },
     ],
-    quote: "The AI detected a cup and handle pattern on SOL that I completely missed. That single trade made me $12,000.",
-    stats: { winRate: 78, totalTrades: 342, avgHoldTime: "4 hours" }
+    icon: Bot,
   },
   {
     id: 2,
-    name: "Sarah Williams",
-    title: "Part-time Investor",
-    avatar: "SW",
-    location: "Austin, TX",
-    joinDate: "November 2023",
-    initialInvestment: 10000,
-    currentPortfolio: 68000,
-    returnPercent: 580,
-    tradingStyle: "Balanced",
-    favoriteFeature: "DCA Automation",
-    timeline: [
-      { month: "Month 1", event: "Set up DCA strategy", profit: 800 },
-      { month: "Month 2", event: "AI caught market dip", profit: 4200 },
-      { month: "Month 3", event: "Copy trading activated", profit: 7500 },
-      { month: "Month 4", event: "Meme coin rally profits", profit: 15000 },
-      { month: "Month 5", event: "Consistent compounding", profit: 20500 },
-      { month: "Month 6", event: "Hit 6-figure milestone", profit: 10000 },
+    phase: "Phase 2",
+    title: "Enhancement",
+    status: "upcoming",
+    description: "Advanced features and community feedback integration",
+    features: [
+      { name: "Copy Trading System", status: "planned" },
+      { name: "Advanced Order Types", status: "planned" },
+      { name: "Mobile App (iOS/Android)", status: "planned" },
+      { name: "Social Trading Features", status: "planned" },
+      { name: "API Access for Developers", status: "planned" },
     ],
-    quote: "I work full-time and have a family. TradeFlow lets my money work for me while I sleep.",
-    stats: { winRate: 72, totalTrades: 156, avgHoldTime: "2 days" }
+    icon: Zap,
   },
   {
     id: 3,
-    name: "David Park",
-    title: "Crypto Enthusiast",
-    avatar: "DP",
-    location: "Miami, FL",
-    joinDate: "December 2023",
-    initialInvestment: 2500,
-    currentPortfolio: 31000,
-    returnPercent: 1140,
-    tradingStyle: "High Risk / High Reward",
-    favoriteFeature: "Whale Tracking",
-    timeline: [
-      { month: "Week 1", event: "First AI-assisted trade", profit: 500 },
-      { month: "Week 2", event: "Whale alert on PEPE", profit: 2800 },
-      { month: "Month 1", event: "Pattern detection gold", profit: 6000 },
-      { month: "Month 2", event: "Multiple bots active", profit: 9500 },
-      { month: "Month 3", event: "10x initial investment", profit: 9700 },
+    phase: "Phase 3",
+    title: "Scale",
+    status: "future",
+    description: "Enterprise features and ecosystem expansion",
+    features: [
+      { name: "Multi-Chain Support", status: "planned" },
+      { name: "Institutional Dashboard", status: "planned" },
+      { name: "White-Label Solutions", status: "planned" },
+      { name: "Advanced Analytics Suite", status: "planned" },
+      { name: "DAO Governance", status: "planned" },
     ],
-    quote: "The whale tracking feature alone is worth the subscription. Following smart money changed everything.",
-    stats: { winRate: 65, totalTrades: 523, avgHoldTime: "45 minutes" }
-  }
+    icon: BarChart3,
+  },
 ];
 
-export const CaseStudies = () => {
-  const [activeCase, setActiveCase] = useState(0);
-  const study = caseStudies[activeCase];
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case "complete":
+      return "bg-green-500/20 text-green-400 border-green-500/30";
+    case "active":
+      return "bg-primary/20 text-primary border-primary/30 animate-pulse";
+    case "planned":
+      return "bg-muted text-muted-foreground border-border";
+    default:
+      return "bg-muted text-muted-foreground border-border";
+  }
+};
 
-  const nextCase = () => setActiveCase((prev) => (prev + 1) % caseStudies.length);
-  const prevCase = () => setActiveCase((prev) => (prev - 1 + caseStudies.length) % caseStudies.length);
+const getPhaseColor = (status: string) => {
+  switch (status) {
+    case "current":
+      return "from-primary to-accent";
+    case "upcoming":
+      return "from-blue-500 to-indigo-500";
+    case "future":
+      return "from-purple-500 to-pink-500";
+    default:
+      return "from-muted to-muted";
+  }
+};
+
+export const CaseStudies = () => {
+  const [activePhase, setActivePhase] = useState(0);
+  const phase = roadmapPhases[activePhase];
+  const Icon = phase.icon;
+
+  const nextPhase = () => setActivePhase((prev) => (prev + 1) % roadmapPhases.length);
+  const prevPhase = () => setActivePhase((prev) => (prev - 1 + roadmapPhases.length) % roadmapPhases.length);
 
   return (
     <section className="py-24 px-4 relative overflow-hidden">
@@ -94,156 +99,105 @@ export const CaseStudies = () => {
           className="text-center mb-16"
         >
           <Badge variant="outline" className="mb-4 border-primary/50">
-            <Trophy className="w-3 h-3 mr-1" />
-            Real Success Stories
+            <Lightbulb className="w-3 h-3 mr-1" />
+            Our Vision
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Trading Journey{' '}
+            Product{' '}
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Case Studies
+              Roadmap
             </span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Detailed breakdowns of how our traders transformed their portfolios with AI-powered trading
+            See where we are headed. Join early access to help shape our development priorities.
           </p>
         </motion.div>
 
         <div className="flex items-center justify-center gap-4 mb-8">
-          <Button variant="outline" size="icon" onClick={prevCase}>
+          <Button variant="outline" size="icon" onClick={prevPhase}>
             <ChevronLeft className="w-4 h-4" />
           </Button>
           <div className="flex gap-2">
-            {caseStudies.map((_, idx) => (
+            {roadmapPhases.map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => setActiveCase(idx)}
+                onClick={() => setActivePhase(idx)}
                 className={`w-3 h-3 rounded-full transition-all ${
-                  idx === activeCase ? 'bg-primary w-8' : 'bg-muted-foreground/30'
+                  idx === activePhase ? 'bg-primary w-8' : 'bg-muted-foreground/30'
                 }`}
               />
             ))}
           </div>
-          <Button variant="outline" size="icon" onClick={nextCase}>
+          <Button variant="outline" size="icon" onClick={nextPhase}>
             <ChevronRight className="w-4 h-4" />
           </Button>
         </div>
 
         <AnimatePresence mode="wait">
           <motion.div
-            key={study.id}
+            key={phase.id}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="glass border-primary/20 overflow-hidden">
+            <Card className="glass border-primary/20 overflow-hidden max-w-4xl mx-auto">
               <CardContent className="p-0">
-                <div className="grid md:grid-cols-3 gap-0">
-                  {/* Profile Section */}
-                  <div className="p-8 bg-gradient-to-br from-primary/10 to-accent/10 border-b md:border-b-0 md:border-r border-border/50">
+                <div className="grid md:grid-cols-2 gap-0">
+                  {/* Phase Header */}
+                  <div className={`p-8 bg-gradient-to-br ${getPhaseColor(phase.status)}`}>
                     <div className="flex items-center gap-4 mb-6">
-                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-xl font-bold text-primary-foreground">
-                        {study.avatar}
+                      <div className="w-16 h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                        <Icon className="w-8 h-8 text-white" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold">{study.name}</h3>
-                        <p className="text-muted-foreground">{study.title}</p>
-                        <p className="text-xs text-muted-foreground">{study.location}</p>
+                        <Badge className="bg-white/20 text-white border-white/30 mb-1">
+                          {phase.phase}
+                        </Badge>
+                        <h3 className="text-2xl font-bold text-white">{phase.title}</h3>
                       </div>
                     </div>
 
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2 text-sm">
-                        <Calendar className="w-4 h-4 text-primary" />
-                        <span className="text-muted-foreground">Joined:</span>
-                        <span>{study.joinDate}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Target className="w-4 h-4 text-primary" />
-                        <span className="text-muted-foreground">Style:</span>
-                        <Badge variant="secondary">{study.tradingStyle}</Badge>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Zap className="w-4 h-4 text-primary" />
-                        <span className="text-muted-foreground">Favorite:</span>
-                        <span>{study.favoriteFeature}</span>
-                      </div>
-                    </div>
+                    <p className="text-white/90 mb-6">{phase.description}</p>
 
-                    <div className="mt-6 p-4 rounded-lg bg-background/50 border border-border/50">
-                      <p className="text-sm italic text-muted-foreground">"{study.quote}"</p>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-2 mt-6">
-                      <div className="text-center p-2 rounded-lg bg-background/50">
-                        <div className="text-lg font-bold text-success">{study.stats.winRate}%</div>
-                        <div className="text-xs text-muted-foreground">Win Rate</div>
+                    <div className="p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Shield className="w-4 h-4 text-white" />
+                        <span className="text-white font-medium">Status</span>
                       </div>
-                      <div className="text-center p-2 rounded-lg bg-background/50">
-                        <div className="text-lg font-bold">{study.stats.totalTrades}</div>
-                        <div className="text-xs text-muted-foreground">Trades</div>
-                      </div>
-                      <div className="text-center p-2 rounded-lg bg-background/50">
-                        <div className="text-lg font-bold">{study.stats.avgHoldTime}</div>
-                        <div className="text-xs text-muted-foreground">Avg Hold</div>
-                      </div>
+                      <p className="text-white/80 text-sm">
+                        {phase.status === "current" 
+                          ? "Currently in development - Early access available"
+                          : phase.status === "upcoming"
+                          ? "Coming in Q2 2025"
+                          : "Planned for Q4 2025"
+                        }
+                      </p>
                     </div>
                   </div>
 
-                  {/* Results Section */}
-                  <div className="md:col-span-2 p-8">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                      <div className="text-center p-4 rounded-xl bg-muted/30">
-                        <DollarSign className="w-5 h-5 mx-auto mb-2 text-muted-foreground" />
-                        <div className="text-2xl font-bold">${study.initialInvestment.toLocaleString()}</div>
-                        <div className="text-xs text-muted-foreground">Initial Investment</div>
-                      </div>
-                      <div className="text-center p-4 rounded-xl bg-success/10 border border-success/20">
-                        <TrendingUp className="w-5 h-5 mx-auto mb-2 text-success" />
-                        <div className="text-2xl font-bold text-success">${study.currentPortfolio.toLocaleString()}</div>
-                        <div className="text-xs text-muted-foreground">Current Portfolio</div>
-                      </div>
-                      <div className="text-center p-4 rounded-xl bg-primary/10 border border-primary/20">
-                        <BarChart3 className="w-5 h-5 mx-auto mb-2 text-primary" />
-                        <div className="text-2xl font-bold text-primary">+{study.returnPercent}%</div>
-                        <div className="text-xs text-muted-foreground">Total Return</div>
-                      </div>
-                      <div className="text-center p-4 rounded-xl bg-accent/10 border border-accent/20">
-                        <Trophy className="w-5 h-5 mx-auto mb-2 text-accent" />
-                        <div className="text-2xl font-bold text-accent">${(study.currentPortfolio - study.initialInvestment).toLocaleString()}</div>
-                        <div className="text-xs text-muted-foreground">Total Profit</div>
-                      </div>
-                    </div>
-
+                  {/* Features List */}
+                  <div className="p-8">
                     <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-primary" />
-                      Trading Journey Timeline
+                      <BarChart3 className="w-4 h-4 text-primary" />
+                      Features & Milestones
                     </h4>
                     
-                    <div className="relative">
-                      <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-accent to-success" />
-                      <div className="space-y-4">
-                        {study.timeline.map((item, idx) => (
-                          <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.1 }}
-                            className="flex items-start gap-4 pl-8 relative"
-                          >
-                            <div className="absolute left-2 top-1 w-4 h-4 rounded-full bg-primary border-2 border-background" />
-                            <div className="flex-1 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
-                              <div className="flex items-center justify-between">
-                                <span className="text-sm font-medium text-primary">{item.month}</span>
-                                <Badge variant="outline" className="text-success border-success/50">
-                                  +${item.profit.toLocaleString()}
-                                </Badge>
-                              </div>
-                              <p className="text-sm text-muted-foreground mt-1">{item.event}</p>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
+                    <div className="space-y-3">
+                      {phase.features.map((feature, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.1 }}
+                          className="flex items-center justify-between p-3 rounded-lg bg-muted/30"
+                        >
+                          <span className="text-foreground">{feature.name}</span>
+                          <Badge variant="outline" className={getStatusColor(feature.status)}>
+                            {feature.status === "complete" ? "✓ Done" : feature.status === "active" ? "Building" : "Planned"}
+                          </Badge>
+                        </motion.div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -251,6 +205,15 @@ export const CaseStudies = () => {
             </Card>
           </motion.div>
         </AnimatePresence>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center text-muted-foreground mt-8 text-sm"
+        >
+          Roadmap is subject to change based on community feedback and market conditions
+        </motion.p>
       </div>
     </section>
   );

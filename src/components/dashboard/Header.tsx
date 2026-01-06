@@ -4,6 +4,7 @@ import { Bell, Search, Settings, LogOut, BarChart3, TrendingUp, Bot, PieChart, C
 import { Button } from "@/components/ui/button";
 import { MobileHeader } from "./MobileHeader";
 import WalletConnect from "@/components/wallet/WalletConnect";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export const Header = () => {
   const { signOut, isGuest } = useAuth();
@@ -70,6 +71,7 @@ export const Header = () => {
 
           {/* Right Actions */}
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <Button variant="ghost" size="icon" className="relative hidden md:flex">
               <Bell className="h-4 w-4" />
               <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary animate-pulse" />

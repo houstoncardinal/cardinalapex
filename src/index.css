@@ -7,7 +7,17 @@
 @import '@fontsource/outfit/700.css';
 
 @layer base {
-  :root {
+  /* Theme transition */
+  .theme-transitioning,
+  .theme-transitioning *,
+  .theme-transitioning *::before,
+  .theme-transitioning *::after {
+    transition: background-color 0.5s ease, border-color 0.5s ease, color 0.3s ease, fill 0.3s ease, stroke 0.3s ease, box-shadow 0.5s ease !important;
+  }
+
+  /* Dark theme (default) */
+  :root,
+  .dark {
     --background: 222 47% 6%;
     --foreground: 210 40% 98%;
 
@@ -57,6 +67,57 @@
     --gradient-card: linear-gradient(135deg, hsl(222 47% 10%) 0%, hsl(222 47% 8%) 100%);
     --gradient-primary: linear-gradient(135deg, hsl(160 84% 39%) 0%, hsl(160 84% 30%) 100%);
     --gradient-accent: linear-gradient(135deg, hsl(190 95% 45%) 0%, hsl(190 95% 35%) 100%);
+  }
+
+  /* Light theme */
+  .light {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 160 84% 32%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 190 90% 35%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 160 84% 32%;
+    --success-foreground: 210 40% 98%;
+
+    --warning: 38 92% 45%;
+    --warning-foreground: 222 47% 11%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 190 90% 35%;
+
+    --chart-green: 160 84% 32%;
+    --chart-red: 0 72% 51%;
+    --chart-blue: 190 90% 35%;
+    --chart-yellow: 38 92% 45%;
+    --chart-purple: 270 60% 55%;
+
+    --glow-primary: 0 0 20px hsl(160 84% 32% / 0.25);
+    --glow-accent: 0 0 20px hsl(190 90% 35% / 0.25);
+    --glow-destructive: 0 0 20px hsl(0 72% 51% / 0.25);
+
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(220 14% 98%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(160 84% 32%) 0%, hsl(160 84% 40%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(190 90% 35%) 0%, hsl(190 90% 45%) 100%);
   }
 }
 

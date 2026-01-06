@@ -34,6 +34,8 @@ import SocialProofFeed from "@/components/landing/SocialProofFeed";
 import LivePerformanceDashboard from "@/components/landing/LivePerformanceDashboard";
 import TeamSection from "@/components/landing/TeamSection";
 import MarketSentiment from "@/components/landing/MarketSentiment";
+import CommunityShowcase from "@/components/landing/CommunityShowcase";
+import PressMentions from "@/components/landing/PressMentions";
 
 // Comparison data for the table
 const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual: boolean | "partial"; others: boolean | "partial" }[] = [
@@ -865,6 +867,12 @@ const Landing = () => {
 
       {/* Team Section */}
       <TeamSection />
+
+      {/* Community Showcase */}
+      <CommunityShowcase />
+
+      {/* Press Mentions */}
+      <PressMentions />
 
       {/* Interactive Demo */}
       <InteractiveDemo />

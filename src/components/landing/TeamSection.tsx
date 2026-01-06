@@ -99,7 +99,7 @@ const TeamSection = () => {
                   </div>
                   
                   <p className="text-muted-foreground mb-2 font-medium">
-                    Cardinal Consulting
+                    Tech CEO, Cardinal Consulting
                   </p>
                   
                   <p className="text-muted-foreground mb-6 leading-relaxed">

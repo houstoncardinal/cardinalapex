@@ -62,6 +62,8 @@ import TradingRobots from "@/components/dashboard/TradingRobots";
 import DeltaVolume from "@/components/dashboard/DeltaVolume";
 import LiquidationHeatmap from "@/components/dashboard/LiquidationHeatmap";
 import OrderFlowImbalance from "@/components/dashboard/OrderFlowImbalance";
+import BacktestingVisualization from "@/components/dashboard/BacktestingVisualization";
+import LiveTradingSignals from "@/components/dashboard/LiveTradingSignals";
 import { Loader2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -119,6 +121,16 @@ const Dashboard = () => {
         {/* Trading Robots - Connect Wallet & Choose Robots */}
         <ErrorBoundary fallbackMessage="Failed to load trading robots">
           <TradingRobots />
+        </ErrorBoundary>
+
+        {/* Backtesting Visualization with Equity Curves */}
+        <ErrorBoundary fallbackMessage="Failed to load backtesting visualization">
+          <BacktestingVisualization />
+        </ErrorBoundary>
+
+        {/* Live Trading Signals - Real-time Buy/Sell Signals */}
+        <ErrorBoundary fallbackMessage="Failed to load live trading signals">
+          <LiveTradingSignals />
         </ErrorBoundary>
 
         {/* Market Overview - Full Width */}

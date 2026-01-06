@@ -33,12 +33,12 @@ interface TradingRobot {
   color: string;
 }
 
-// Real trading algorithm descriptions with actual technical knowledge
+// Advanced trading algorithm descriptions with real technical knowledge
 const initialRobots: TradingRobot[] = [
   {
     id: 'alpha-scalper',
     name: 'Alpha Scalper',
-    description: 'Uses Order Flow Imbalance analysis with Delta Volume divergence. Enters on bid/ask pressure shifts with 5-tick stop-loss. Targets 2:1 R:R on 1-minute timeframe using VWAP deviation.',
+    description: 'Order Flow Imbalance with Delta Volume divergence. Uses Footprint Charts for bid/ask pressure detection. Enters on CVD (Cumulative Volume Delta) breakouts with 5-tick stop. Targets VWAP deviation reversion on 1-minute TF.',
     icon: Zap,
     riskLevel: 'aggressive',
     strategy: 'scalper',
@@ -50,7 +50,7 @@ const initialRobots: TradingRobot[] = [
   {
     id: 'steady-gains',
     name: 'Steady Gains',
-    description: 'Implements RSI(14) mean reversion with Bollinger Band squeeze breakouts. Enters on RSI oversold/overbought (30/70) with band expansion confirmation. Uses ATR-based dynamic stops.',
+    description: 'Ichimoku Cloud system with Tenkan-Kijun cross confirmation. Enters above/below Kumo cloud with Chikou Span breakout. Uses RSI(14) for momentum filter and Bollinger Band squeeze for volatility expansion trades.',
     icon: Shield,
     riskLevel: 'balanced',
     strategy: 'swing',
@@ -62,7 +62,7 @@ const initialRobots: TradingRobot[] = [
   {
     id: 'momentum-hunter',
     name: 'Momentum Hunter',
-    description: 'Detects Wyckoff accumulation phases and Spring patterns. Uses On-Balance Volume divergence with price action. Enters on Phase D markup with volume confirmation and trails with Supertrend.',
+    description: 'Elliott Wave detection with Fibonacci extension targets (1.618, 2.618, 4.236). Identifies Wave 3 impulses using RSI momentum divergence. Enters on Wave 4 retracements to 38.2%-50% levels with Wave 5 targets.',
     icon: Rocket,
     riskLevel: 'aggressive',
     strategy: 'swing',
@@ -74,7 +74,7 @@ const initialRobots: TradingRobot[] = [
   {
     id: 'diamond-hands',
     name: 'Diamond Hands',
-    description: 'Employs DCA with Fibonacci retracement levels (38.2%, 50%, 61.8%). Accumulates on golden pocket bounces and 200-EMA support tests. HODL until macro trend invalidation on weekly close.',
+    description: 'Market Structure analysis with Break of Structure (BOS) and Change of Character (CHoCH) detection. Accumulates at Order Blocks and Fair Value Gaps. Uses HTF trend alignment with LTF entry refinement.',
     icon: Target,
     riskLevel: 'conservative',
     strategy: 'hodler',
@@ -86,7 +86,7 @@ const initialRobots: TradingRobot[] = [
   {
     id: 'whale-tracker',
     name: 'Whale Tracker',
-    description: 'Monitors on-chain large transaction flows (>$100K) with exchange inflow/outflow ratios. Front-runs accumulation patterns using SOPR and NUPL metrics. Enters on whale wallet clustering signals.',
+    description: 'On-chain metrics: SOPR, NUPL, MVRV Z-Score analysis. Tracks exchange inflow/outflow ratios and whale wallet clustering. Front-runs Smart Money accumulation using Realized Price bands and UTXO age analysis.',
     icon: TrendingUp,
     riskLevel: 'aggressive',
     strategy: 'swing',
@@ -98,7 +98,7 @@ const initialRobots: TradingRobot[] = [
   {
     id: 'night-owl',
     name: 'Night Owl',
-    description: 'Exploits low-liquidity Asian session spreads using Market Profile value areas. Targets POC (Point of Control) reversion with TPO analysis. Uses fixed 1% risk per trade with session-based stops.',
+    description: 'Market Profile with TPO (Time Price Opportunity) analysis. Trades POC (Point of Control) and Value Area High/Low levels during Asian session. Uses Initial Balance breakout strategy with Volume Profile confluence.',
     icon: Clock,
     riskLevel: 'balanced',
     strategy: 'scalper',

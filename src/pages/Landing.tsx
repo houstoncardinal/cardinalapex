@@ -55,69 +55,71 @@ const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual:
   { feature: "Copy Trading", tradeflow: true, manual: false, others: true },
 ];
 
-// Live stats for social proof
+// Startup metrics - honest positioning
 const liveStats = [
-  { label: "Active Traders", value: 12847, prefix: "", suffix: "+", icon: Users },
-  { label: "Trades Executed", value: 2847632, prefix: "", suffix: "", icon: Activity },
-  { label: "Total Profits", value: 47800000, prefix: "$", suffix: "", icon: DollarSign },
-  { label: "Win Rate", value: 94, prefix: "", suffix: "%", icon: TrendingUp },
+  { label: "Early Adopters", value: 0, prefix: "", suffix: "", icon: Users, displayText: "Join Now" },
+  { label: "AI Algorithms", value: 6, prefix: "", suffix: "+", icon: Activity },
+  { label: "Supported Assets", value: 500, prefix: "", suffix: "+", icon: DollarSign },
+  { label: "Uptime", value: 99.9, prefix: "", suffix: "%", icon: TrendingUp },
 ];
 
 const features = [
   {
     icon: Bot,
     title: "AI Trading Agents",
-    description: "Deploy aggressive AI bots that analyze markets 24/7 and execute trades at the perfect moment with 94%+ accuracy",
+    description: "Deploy intelligent AI bots that analyze markets 24/7 and execute trades based on advanced algorithms and pattern recognition",
     highlight: "24/7 Automated",
     color: "from-emerald-500 to-green-600",
   },
   {
     icon: LineChart,
     title: "Advanced Pattern Recognition",
-    description: "Detect Head & Shoulders, Elliott Waves, Wyckoff patterns, and smart money movements before they happen",
-    highlight: "85%+ Confidence",
+    description: "Detect Head & Shoulders, Elliott Waves, Wyckoff patterns, and smart money movements using institutional-grade analysis",
+    highlight: "Technical Analysis",
     color: "from-cyan-500 to-blue-600",
   },
   {
     icon: Zap,
     title: "Lightning Fast Execution",
-    description: "Sub-millisecond trade execution on Solana blockchain. Your AI agents never miss an opportunity",
-    highlight: "< 1ms Speed",
+    description: "Sub-second trade execution on Solana blockchain. Your AI agents act on opportunities the moment they appear",
+    highlight: "Solana Speed",
     color: "from-yellow-500 to-orange-600",
   },
   {
     icon: Shield,
     title: "Smart Risk Management",
-    description: "Built-in stop-losses, position sizing, and portfolio protection. Never lose more than you're comfortable with",
-    highlight: "AI Protected",
+    description: "Built-in stop-losses, position sizing, and portfolio protection. Control your risk with customizable parameters",
+    highlight: "Risk Controls",
     color: "from-purple-500 to-pink-600",
   },
   {
     icon: Target,
     title: "Precision Entry & Exit",
-    description: "RSI, MACD, Bollinger Bands, VWAP - all analyzed together to find the perfect trade timing",
+    description: "RSI, MACD, Bollinger Bands, VWAP - multiple indicators analyzed together for optimal trade timing",
     highlight: "Multi-Indicator",
     color: "from-rose-500 to-red-600",
   },
   {
     icon: Globe,
     title: "Multi-Market Trading",
-    description: "Trade crypto, meme coins, stocks - all from one unified platform. BTC, ETH, SOL, PEPE, and 500+ assets",
+    description: "Trade crypto and meme coins from one unified platform. Support for SOL, BTC, ETH, and 500+ tokens",
     highlight: "500+ Assets",
     color: "from-indigo-500 to-violet-600",
   },
 ];
 
+// Bot strategies - remove fake profit numbers
 const tradingBots = [
-  { name: "Alpha Predator", strategy: "Aggressive Momentum", winRate: 94, trades: "2.4K", profit: "+$847K" },
-  { name: "Trend Surfer", strategy: "Swing Trading", winRate: 89, trades: "1.8K", profit: "+$623K" },
-  { name: "Scalp Master", strategy: "High-Frequency", winRate: 91, trades: "12.3K", profit: "+$1.2M" },
+  { name: "Alpha Predator", strategy: "Aggressive Momentum", description: "High-frequency pattern detection" },
+  { name: "Trend Surfer", strategy: "Swing Trading", description: "Multi-timeframe trend following" },
+  { name: "Scalp Master", strategy: "High-Frequency", description: "Micro-movement scalping" },
 ];
 
-const testimonials = [
-  { name: "Marcus R.", role: "Day Trader", quote: "Made more in 3 months than my entire year of manual trading", profit: "+$47,230" },
-  { name: "Sarah K.", role: "Crypto Investor", quote: "The AI detected a pattern I never would have seen. Life-changing.", profit: "+$128,500" },
-  { name: "David L.", role: "Portfolio Manager", quote: "Finally, an AI that actually delivers on its promises", profit: "+$312,000" },
+// Early access - no fake testimonials
+const earlyAccessBenefits = [
+  { title: "Founding Member Status", description: "Be among the first to access our AI trading platform" },
+  { title: "Priority Support", description: "Direct access to our development team for feedback and support" },
+  { title: "Lifetime Discount", description: "Early adopters receive special pricing when we launch premium features" },
 ];
 
 const steps = [
@@ -182,32 +184,32 @@ const pricingPlans = [
 
 const faqItems = [
   {
-    question: "How does AI trading actually work?",
-    answer: "Our AI trading bots use advanced machine learning algorithms to analyze market patterns, technical indicators, and smart money flows in real-time. When high-confidence trading opportunities are detected (85%+ confidence), the AI automatically executes trades on your behalf through your connected Phantom wallet on the Solana blockchain.",
+    question: "How does AI trading work?",
+    answer: "Our AI trading bots use machine learning algorithms to analyze market patterns, technical indicators, and on-chain data in real-time. When trading opportunities are detected based on your strategy settings, the AI can automatically execute trades through your connected Phantom wallet on the Solana blockchain.",
   },
   {
-    question: "Is my money safe with AI trading?",
-    answer: "Absolutely. Your funds remain in your own Phantom wallet at all times - we never have custody of your assets. Our AI includes built-in risk management with automatic stop-losses, position sizing limits, and portfolio protection. Bank-grade encryption protects all your data and API connections.",
+    question: "Is my money safe?",
+    answer: "Your funds remain in your own Phantom wallet at all times - we never have custody of your assets. All trades are executed directly from your wallet with your approval. You maintain full control and can pause or stop trading at any time.",
   },
   {
     question: "What returns can I expect?",
-    answer: "While past performance doesn't guarantee future results, our top AI bots have historically achieved 89-94% win rates. Returns vary based on market conditions, strategy selection, and risk tolerance settings. Our aggressive growth bots are designed for maximum profit potential, while conservative options prioritize capital preservation.",
+    answer: "Trading involves significant risk. Past performance of any trading strategy does not guarantee future results. Returns vary based on market conditions, strategy selection, and risk settings. We recommend starting with small amounts and only trading what you can afford to lose.",
   },
   {
     question: "Do I need trading experience?",
-    answer: "Not at all! TradeFlow is designed to be beginner-friendly. Simply connect your wallet, choose an AI trading strategy (aggressive, balanced, or conservative), and let the AI handle everything. Our visual dashboard shows you exactly what the AI is doing in real-time, so you can learn while you earn.",
+    answer: "TradeFlow is designed to be beginner-friendly. Simply connect your wallet and choose a trading strategy that matches your risk tolerance. Our dashboard shows you exactly what the AI is analyzing and why it makes decisions.",
   },
   {
     question: "Which cryptocurrencies can I trade?",
-    answer: "TradeFlow supports trading on the Solana blockchain, including SOL, popular meme coins (PEPE, SHIB, FLOKI, DOGE, BONK, WIF), and 500+ other tokens. Our AI constantly scans for the best opportunities across all supported assets.",
+    answer: "TradeFlow supports trading on the Solana blockchain, including SOL and 500+ SPL tokens. Our AI continuously scans for opportunities across all supported assets based on your preferences.",
   },
   {
     question: "Can I stop the AI at any time?",
-    answer: "Yes, you have full control. You can pause, stop, or modify your AI bots instantly from the dashboard. Any open positions can be manually closed, and you can adjust risk settings, trade limits, and strategy parameters at any time.",
+    answer: "Yes, you have full control. You can pause, stop, or modify your AI bots instantly from the dashboard. Any open positions can be manually closed, and you can adjust settings at any time.",
   },
   {
-    question: "What makes TradeFlow different from other trading bots?",
-    answer: "TradeFlow combines institutional-grade pattern recognition (Head & Shoulders, Elliott Waves, Wyckoff analysis) with real-time smart money flow tracking and lightning-fast Solana execution. Our AI detects opportunities that human traders miss, with sub-millisecond execution speeds that ensure you never miss a trade.",
+    question: "Is TradeFlow a new platform?",
+    answer: "Yes! TradeFlow is a new startup built by Cardinal Consulting. We're currently in early access and actively building with feedback from our founding members. Join now to help shape the future of AI-powered trading.",
   },
 ];
 
@@ -252,8 +254,7 @@ const Landing = () => {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   
   const { scrollY } = useScroll();
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
+  // Removed scroll-based opacity/scale - hero stays visible
 
   useEffect(() => {
     setIsVisible(true);
@@ -352,7 +353,8 @@ const Landing = () => {
 
       {/* Hero Section */}
       <motion.section 
-        style={{ opacity: heroOpacity, scale: heroScale }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         className="relative z-10 px-4 sm:px-6 pt-8 sm:pt-16 pb-24 sm:pb-32 lg:px-12 lg:pt-20"
       >
         {/* Live Trade Notifications - contained within hero */}
@@ -611,14 +613,10 @@ const Landing = () => {
                         <div className="flex items-center justify-between mb-3">
                           <span className="font-semibold text-foreground text-sm">{bot.name}</span>
                           <Badge variant="outline" className="text-[10px] text-primary border-primary/50">
-                            {bot.winRate}% Win
+                            {bot.strategy}
                           </Badge>
                         </div>
-                        <p className="text-xs text-muted-foreground mb-3">{bot.strategy}</p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-muted-foreground">{bot.trades} trades</span>
-                          <span className="text-sm font-bold text-green-400">{bot.profit}</span>
-                        </div>
+                        <p className="text-xs text-muted-foreground">{bot.description}</p>
                         {activeBot === index && (
                           <motion.div
                             className="mt-3 pt-3 border-t border-primary/20"
@@ -811,49 +809,63 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
+      {/* Early Access Section - Replacing fake testimonials */}
+      <section className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12 sm:mb-16"
+            className="text-center mb-12"
           >
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30">Success Stories</Badge>
+            <Badge className="mb-4 bg-primary/20 text-primary border-primary/30">
+              <Sparkles className="h-3 w-3 mr-1" />
+              Early Access
+            </Badge>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Traders <span className="text-accent">Love</span> TradeFlow
+              Be a <span className="text-accent">Founding Member</span>
             </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              TradeFlow is a new startup by Cardinal Consulting. Join our early access program and help shape the future of AI-powered trading.
+            </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
-            {testimonials.map((testimonial, index) => (
+            {earlyAccessBenefits.map((benefit, index) => (
               <motion.div
-                key={testimonial.name}
+                key={benefit.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
                 className="glass rounded-2xl p-6 sm:p-8"
               >
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-foreground mb-4 italic text-sm sm:text-base">"{testimonial.quote}"</p>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-semibold text-foreground text-sm">{testimonial.name}</p>
-                    <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="p-2 rounded-lg bg-primary/20">
+                    <CheckCircle2 className="h-5 w-5 text-primary" />
                   </div>
-                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-sm">
-                    {testimonial.profit}
-                  </Badge>
                 </div>
+                <h3 className="font-semibold text-foreground text-lg mb-2">{benefit.title}</h3>
+                <p className="text-sm text-muted-foreground">{benefit.description}</p>
               </motion.div>
             ))}
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-12 text-center"
+          >
+            <Button 
+              size="lg"
+              onClick={() => navigate("/auth?mode=signup")}
+              className="bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold shadow-lg shadow-primary/25"
+            >
+              <Rocket className="h-5 w-5 mr-2" />
+              Join Early Access
+            </Button>
+          </motion.div>
         </div>
       </section>
 

@@ -353,8 +353,10 @@ const Landing = () => {
       {/* Hero Section */}
       <motion.section 
         style={{ opacity: heroOpacity, scale: heroScale }}
-        className="relative z-10 px-4 sm:px-6 pt-8 sm:pt-16 pb-16 sm:pb-24 lg:px-12 lg:pt-20"
+        className="relative z-10 px-4 sm:px-6 pt-8 sm:pt-16 pb-24 sm:pb-32 lg:px-12 lg:pt-20"
       >
+        {/* Live Trade Notifications - contained within hero */}
+        <LiveTradeNotifications contained />
         <div className="max-w-7xl mx-auto">
           <div className="text-center space-y-6 sm:space-y-8">
             {/* Badge */}
@@ -1350,9 +1352,6 @@ const Landing = () => {
 
       {/* Partner Carousel */}
       <PartnerCarousel />
-
-      {/* Live Trade Notifications */}
-      <LiveTradeNotifications />
 
       {/* Mobile App Download */}
       <MobileAppDownload />

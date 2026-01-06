@@ -21,7 +21,11 @@ interface Notification {
   position: "left" | "right";
 }
 
-export const LiveTradeNotifications = () => {
+interface LiveTradeNotificationsProps {
+  contained?: boolean;
+}
+
+export const LiveTradeNotifications = ({ contained = false }: LiveTradeNotificationsProps) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [notificationId, setNotificationId] = useState(0);
 
@@ -35,7 +39,7 @@ export const LiveTradeNotifications = () => {
         ...prev.slice(-2),
         { id: notificationId, trade: randomTrade, position },
       ]);
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [notificationId]);
@@ -49,8 +53,13 @@ export const LiveTradeNotifications = () => {
     }
   }, [notifications]);
 
+  // If contained, use absolute positioning within parent; otherwise hidden (disabled for rest of page)
+  if (!contained) {
+    return null;
+  }
+
   return (
-    <div className="fixed bottom-24 left-0 right-0 z-40 pointer-events-none px-4">
+    <div className="absolute bottom-4 left-0 right-0 z-40 pointer-events-none px-4">
       <div className="max-w-7xl mx-auto relative">
         <AnimatePresence>
           {notifications.map((notification, index) => (

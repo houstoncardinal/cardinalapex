@@ -64,6 +64,9 @@ import LiquidationHeatmap from "@/components/dashboard/LiquidationHeatmap";
 import OrderFlowImbalance from "@/components/dashboard/OrderFlowImbalance";
 import BacktestingVisualization from "@/components/dashboard/BacktestingVisualization";
 import LiveTradingSignals from "@/components/dashboard/LiveTradingSignals";
+import SocialSentimentAggregator from "@/components/dashboard/SocialSentimentAggregator";
+import AdvancedOrderBook from "@/components/dashboard/AdvancedOrderBook";
+import AIPatternRecognition from "@/components/dashboard/AIPatternRecognition";
 import { Loader2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -132,6 +135,21 @@ const Dashboard = () => {
         <ErrorBoundary fallbackMessage="Failed to load live trading signals">
           <LiveTradingSignals />
         </ErrorBoundary>
+
+        {/* AI Pattern Recognition */}
+        <ErrorBoundary fallbackMessage="Failed to load AI pattern recognition">
+          <AIPatternRecognition />
+        </ErrorBoundary>
+
+        {/* Social Sentiment & Order Book Grid */}
+        <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
+          <ErrorBoundary fallbackMessage="Failed to load social sentiment">
+            <SocialSentimentAggregator />
+          </ErrorBoundary>
+          <ErrorBoundary fallbackMessage="Failed to load advanced order book">
+            <AdvancedOrderBook />
+          </ErrorBoundary>
+        </div>
 
         {/* Market Overview - Full Width */}
         <ErrorBoundary fallbackMessage="Failed to load market overview">

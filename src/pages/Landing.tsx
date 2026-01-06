@@ -36,6 +36,9 @@ import TeamSection from "@/components/landing/TeamSection";
 import MarketSentiment from "@/components/landing/MarketSentiment";
 import CommunityShowcase from "@/components/landing/CommunityShowcase";
 import PressMentions from "@/components/landing/PressMentions";
+import StickyCtaBar from "@/components/landing/StickyCtaBar";
+import PricingComparisonTable from "@/components/landing/PricingComparisonTable";
+import ReferralDashboard from "@/components/landing/ReferralDashboard";
 
 // Comparison data for the table
 const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual: boolean | "partial"; others: boolean | "partial" }[] = [
@@ -971,6 +974,12 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* Pricing Comparison Table */}
+      <PricingComparisonTable />
+
+      {/* Referral Dashboard */}
+      <ReferralDashboard />
+
       {/* Comparison Table Section */}
       <section id="comparison" className="relative z-10 px-4 sm:px-6 py-16 sm:py-24 lg:px-12 bg-gradient-to-b from-background to-secondary/30">
         <div className="max-w-6xl mx-auto">
@@ -1351,6 +1360,9 @@ const Landing = () => {
 
       {/* Chat Widget */}
       <ChatWidget />
+
+      {/* Sticky CTA Bar */}
+      <StickyCtaBar />
 
       {/* CSS for gradient animation */}
       <style>{`

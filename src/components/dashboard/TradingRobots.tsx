@@ -33,11 +33,12 @@ interface TradingRobot {
   color: string;
 }
 
+// Real trading algorithm descriptions with actual technical knowledge
 const initialRobots: TradingRobot[] = [
   {
     id: 'alpha-scalper',
     name: 'Alpha Scalper',
-    description: 'Lightning-fast trades on micro-movements. High frequency, tight stops.',
+    description: 'Uses Order Flow Imbalance analysis with Delta Volume divergence. Enters on bid/ask pressure shifts with 5-tick stop-loss. Targets 2:1 R:R on 1-minute timeframe using VWAP deviation.',
     icon: Zap,
     riskLevel: 'aggressive',
     strategy: 'scalper',
@@ -49,7 +50,7 @@ const initialRobots: TradingRobot[] = [
   {
     id: 'steady-gains',
     name: 'Steady Gains',
-    description: 'Balanced approach with moderate risk. Perfect for consistent growth.',
+    description: 'Implements RSI(14) mean reversion with Bollinger Band squeeze breakouts. Enters on RSI oversold/overbought (30/70) with band expansion confirmation. Uses ATR-based dynamic stops.',
     icon: Shield,
     riskLevel: 'balanced',
     strategy: 'swing',
@@ -61,7 +62,7 @@ const initialRobots: TradingRobot[] = [
   {
     id: 'momentum-hunter',
     name: 'Momentum Hunter',
-    description: 'Catches explosive moves using AI pattern detection. High reward plays.',
+    description: 'Detects Wyckoff accumulation phases and Spring patterns. Uses On-Balance Volume divergence with price action. Enters on Phase D markup with volume confirmation and trails with Supertrend.',
     icon: Rocket,
     riskLevel: 'aggressive',
     strategy: 'swing',
@@ -73,7 +74,7 @@ const initialRobots: TradingRobot[] = [
   {
     id: 'diamond-hands',
     name: 'Diamond Hands',
-    description: 'Long-term accumulator. Buys dips, never panic sells. HODL strategy.',
+    description: 'Employs DCA with Fibonacci retracement levels (38.2%, 50%, 61.8%). Accumulates on golden pocket bounces and 200-EMA support tests. HODL until macro trend invalidation on weekly close.',
     icon: Target,
     riskLevel: 'conservative',
     strategy: 'hodler',
@@ -85,7 +86,7 @@ const initialRobots: TradingRobot[] = [
   {
     id: 'whale-tracker',
     name: 'Whale Tracker',
-    description: 'Follows smart money. Detects whale accumulation and front-runs moves.',
+    description: 'Monitors on-chain large transaction flows (>$100K) with exchange inflow/outflow ratios. Front-runs accumulation patterns using SOPR and NUPL metrics. Enters on whale wallet clustering signals.',
     icon: TrendingUp,
     riskLevel: 'aggressive',
     strategy: 'swing',
@@ -97,7 +98,7 @@ const initialRobots: TradingRobot[] = [
   {
     id: 'night-owl',
     name: 'Night Owl',
-    description: 'Trades during low-volume hours for better entries. Patient accumulator.',
+    description: 'Exploits low-liquidity Asian session spreads using Market Profile value areas. Targets POC (Point of Control) reversion with TPO analysis. Uses fixed 1% risk per trade with session-based stops.',
     icon: Clock,
     riskLevel: 'balanced',
     strategy: 'scalper',

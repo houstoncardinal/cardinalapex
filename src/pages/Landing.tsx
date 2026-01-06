@@ -39,6 +39,7 @@ import PressMentions from "@/components/landing/PressMentions";
 import StickyCtaBar from "@/components/landing/StickyCtaBar";
 import PricingComparisonTable from "@/components/landing/PricingComparisonTable";
 import ReferralDashboard from "@/components/landing/ReferralDashboard";
+import ThemeToggle from "@/components/ThemeToggle";
 
 // Comparison data for the table
 const comparisonData: { feature: string; tradeflow: boolean | "partial"; manual: boolean | "partial"; others: boolean | "partial" }[] = [
@@ -330,7 +331,8 @@ const Landing = () => {
           </div>
         </div>
         
-        <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <ThemeToggle />
           <Button variant="ghost" size="sm" className="hidden md:flex text-muted-foreground hover:text-foreground" onClick={() => navigate("/auth")}>
             Sign In
           </Button>

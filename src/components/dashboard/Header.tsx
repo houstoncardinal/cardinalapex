@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { Bell, Search, Settings, LogOut, BarChart3, TrendingUp, Bot, PieChart, Clock } from "lucide-react";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
+import { Bell, Search, Settings, LogOut, BarChart3, TrendingUp, Bot, PieChart, Clock, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MobileHeader } from "./MobileHeader";
 import WalletConnect from "@/components/wallet/WalletConnect";
@@ -8,6 +9,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 
 export const Header = () => {
   const { signOut, isGuest } = useAuth();
+  const { isAdmin } = useAdminAuth();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -79,6 +81,18 @@ export const Header = () => {
             <Button variant="ghost" size="icon" className="hidden md:flex">
               <Settings className="h-4 w-4" />
             </Button>
+            
+            {isAdmin && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="hidden md:flex text-primary"
+                onClick={() => navigate("/admin")}
+                title="Admin Dashboard"
+              >
+                <Shield className="h-4 w-4" />
+              </Button>
+            )}
             
             {/* Wallet Connect */}
             <WalletConnect />

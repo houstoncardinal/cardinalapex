@@ -1,5 +1,16 @@
 import { useState, useEffect } from "react";
-import { Shield, Users, Megaphone, BarChart3, Settings, X } from "lucide-react";
+import { 
+  Shield, 
+  Users, 
+  Megaphone, 
+  BarChart3, 
+  Settings, 
+  X, 
+  TrendingUp, 
+  Bot,
+  Activity,
+  UserPlus
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -7,7 +18,11 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 
 interface AdminStats {
-  pendingUsers: number;
+  totalUsers: number;
+  newUsersToday: number;
+  totalTrades: number;
+  tradesToday: number;
+  activeBots: number;
   activeAnnouncements: number;
 }
 
@@ -22,14 +37,41 @@ export const FloatingAdminButton = () => {
   const { isAdmin, loading } = useAdminAuth();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const [stats, setStats] = useState<AdminStats>({ pendingUsers: 0, activeAnnouncements: 0 });
+  const [stats, setStats] = useState<AdminStats>({
+    totalUsers: 0,
+    newUsersToday: 0,
+    totalTrades: 0,
+    tradesToday: 0,
+    activeBots: 0,
+    activeAnnouncements: 0,
+  });
 
   useEffect(() => {
     if (!isAdmin) return;
 
     const fetchStats = async () => {
-      const [usersResult, announcementsResult] = await Promise.all([
-        supabase.from("user_roles").select("*", { count: "exact", head: true }),
+      const [
+        profilesResult,
+        newUsersResult,
+        tradesResult,
+        tradesTodayResult,
+        botsResult,
+        announcementsResult,
+      ] = await Promise.all([
+        supabase.from("profiles").select("*", { count: "exact", head: true }),
+        supabase
+          .from("profiles")
+          .select("*", { count: "exact", head: true })
+          .gte("created_at", new Date().toISOString().split("T")[0]),
+        supabase.from("trades").select("*", { count: "exact", head: true }),
+        supabase
+          .from("trades")
+          .select("*", { count: "exact", head: true })
+          .gte("created_at", new Date().toISOString().split("T")[0]),
+        supabase
+          .from("ai_bots")
+          .select("*", { count: "exact", head: true })
+          .eq("is_active", true),
         supabase
           .from("announcements")
           .select("*", { count: "exact", head: true })
@@ -37,7 +79,11 @@ export const FloatingAdminButton = () => {
       ]);
 
       setStats({
-        pendingUsers: usersResult.count || 0,
+        totalUsers: profilesResult.count || 0,
+        newUsersToday: newUsersResult.count || 0,
+        totalTrades: tradesResult.count || 0,
+        tradesToday: tradesTodayResult.count || 0,
+        activeBots: botsResult.count || 0,
         activeAnnouncements: announcementsResult.count || 0,
       });
     };
@@ -46,10 +92,20 @@ export const FloatingAdminButton = () => {
 
     // Subscribe to realtime updates
     const channel = supabase
-      .channel("admin-stats")
+      .channel("admin-stats-enhanced")
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "user_roles" },
+        { event: "*", schema: "public", table: "profiles" },
+        () => fetchStats()
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "trades" },
+        () => fetchStats()
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "ai_bots" },
         () => fetchStats()
       )
       .on(
@@ -66,7 +122,11 @@ export const FloatingAdminButton = () => {
 
   if (loading || !isAdmin) return null;
 
-  const totalBadgeCount = stats.activeAnnouncements;
+  const totalBadgeCount = stats.newUsersToday + stats.activeAnnouncements;
+  
+  // Simple system health based on active bots ratio
+  const systemHealth = stats.activeBots > 0 ? "operational" : "idle";
+  const healthColor = systemHealth === "operational" ? "text-success" : "text-warning";
 
   const handleAction = (action: string) => {
     setIsOpen(false);
@@ -82,15 +142,61 @@ export const FloatingAdminButton = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-16 right-0 mb-2 w-56"
+            className="absolute bottom-16 right-0 mb-2 w-72"
           >
             <div className="glass rounded-xl border border-border shadow-xl overflow-hidden">
-              <div className="p-3 border-b border-border bg-primary/10">
-                <p className="text-sm font-semibold text-foreground">Quick Admin Actions</p>
-                <p className="text-xs text-muted-foreground">
-                  {stats.pendingUsers} users • {stats.activeAnnouncements} active alerts
-                </p>
+              {/* Header with stats */}
+              <div className="p-4 border-b border-border bg-primary/10">
+                <p className="text-sm font-semibold text-foreground mb-3">Admin Dashboard</p>
+                
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="p-2 rounded-lg bg-background/50">
+                    <div className="flex items-center gap-2">
+                      <Users className="h-3.5 w-3.5 text-primary" />
+                      <span className="text-xs text-muted-foreground">Users</span>
+                    </div>
+                    <p className="text-lg font-bold text-foreground">{stats.totalUsers}</p>
+                    {stats.newUsersToday > 0 && (
+                      <div className="flex items-center gap-1 text-success text-xs">
+                        <UserPlus className="h-3 w-3" />
+                        +{stats.newUsersToday} today
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="p-2 rounded-lg bg-background/50">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="h-3.5 w-3.5 text-primary" />
+                      <span className="text-xs text-muted-foreground">Trades</span>
+                    </div>
+                    <p className="text-lg font-bold text-foreground">{stats.totalTrades}</p>
+                    {stats.tradesToday > 0 && (
+                      <p className="text-xs text-success">+{stats.tradesToday} today</p>
+                    )}
+                  </div>
+                  
+                  <div className="p-2 rounded-lg bg-background/50">
+                    <div className="flex items-center gap-2">
+                      <Bot className="h-3.5 w-3.5 text-primary" />
+                      <span className="text-xs text-muted-foreground">Active Bots</span>
+                    </div>
+                    <p className="text-lg font-bold text-foreground">{stats.activeBots}</p>
+                  </div>
+                  
+                  <div className="p-2 rounded-lg bg-background/50">
+                    <div className="flex items-center gap-2">
+                      <Activity className="h-3.5 w-3.5 text-primary" />
+                      <span className="text-xs text-muted-foreground">System</span>
+                    </div>
+                    <p className={`text-sm font-semibold capitalize ${healthColor}`}>
+                      {systemHealth}
+                    </p>
+                  </div>
+                </div>
               </div>
+              
+              {/* Quick Actions */}
               <div className="p-2 space-y-1">
                 {menuItems.map((item, index) => (
                   <motion.button
@@ -108,6 +214,8 @@ export const FloatingAdminButton = () => {
                   </motion.button>
                 ))}
               </div>
+              
+              {/* Footer */}
               <div className="p-2 border-t border-border">
                 <Button
                   variant="default"

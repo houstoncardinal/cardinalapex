@@ -10,10 +10,13 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
+import { AdminAnalytics } from '@/components/admin/AdminAnalytics';
+import { AdminAnnouncements } from '@/components/admin/AdminAnnouncements';
+import { AdminRoleManager } from '@/components/admin/AdminRoleManager';
 import { 
-  Users, Bot, TrendingUp, Bell, Shield, Settings, 
-  LogOut, Search, RefreshCw, Trash2, Eye, ChevronLeft,
-  Database, Activity, DollarSign, Clock
+  Users, Bot, TrendingUp, Bell, Shield, 
+  LogOut, Search, RefreshCw, Trash2, ChevronLeft,
+  Database, Activity, BarChart3, Megaphone, Crown
 } from 'lucide-react';
 
 const Admin = () => {
@@ -161,15 +164,27 @@ const Admin = () => {
 
       <main className="container px-4 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <div className="flex items-center justify-between">
-            <TabsList className="bg-muted/50">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <TabsList className="bg-muted/50 flex-wrap h-auto">
               <TabsTrigger value="overview" className="gap-2">
                 <Activity className="h-4 w-4" />
                 Overview
               </TabsTrigger>
+              <TabsTrigger value="analytics" className="gap-2">
+                <BarChart3 className="h-4 w-4" />
+                Analytics
+              </TabsTrigger>
               <TabsTrigger value="users" className="gap-2">
                 <Users className="h-4 w-4" />
                 Users
+              </TabsTrigger>
+              <TabsTrigger value="roles" className="gap-2">
+                <Crown className="h-4 w-4" />
+                Roles
+              </TabsTrigger>
+              <TabsTrigger value="announcements" className="gap-2">
+                <Megaphone className="h-4 w-4" />
+                Announcements
               </TabsTrigger>
               <TabsTrigger value="trades" className="gap-2">
                 <TrendingUp className="h-4 w-4" />
@@ -291,6 +306,21 @@ const Admin = () => {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+
+          {/* Analytics Tab */}
+          <TabsContent value="analytics">
+            <AdminAnalytics users={users} trades={trades} bots={bots} />
+          </TabsContent>
+
+          {/* Roles Tab */}
+          <TabsContent value="roles">
+            <AdminRoleManager users={users} />
+          </TabsContent>
+
+          {/* Announcements Tab */}
+          <TabsContent value="announcements">
+            <AdminAnnouncements />
           </TabsContent>
 
           {/* Users Tab */}

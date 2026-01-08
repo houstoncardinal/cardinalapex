@@ -67,6 +67,7 @@ import LiveTradingSignals from "@/components/dashboard/LiveTradingSignals";
 import SocialSentimentAggregator from "@/components/dashboard/SocialSentimentAggregator";
 import AdvancedOrderBook from "@/components/dashboard/AdvancedOrderBook";
 import AIPatternRecognition from "@/components/dashboard/AIPatternRecognition";
+import { FloatingAdminButton } from "@/components/dashboard/FloatingAdminButton";
 import { Loader2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -453,6 +454,9 @@ const Dashboard = () => {
       
       {/* Mobile Bottom Toolbar */}
       <MobileToolbar />
+      
+      {/* Floating Admin Button */}
+      <FloatingAdminButton />
     </div>
   );
 };

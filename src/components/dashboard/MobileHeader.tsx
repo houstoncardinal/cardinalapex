@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu,
@@ -20,6 +21,7 @@ import {
   Home,
   User,
   ChevronRight,
+  Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -64,6 +66,7 @@ const MobileMenuItem = ({ icon: Icon, label, description, onClick, badge }: Mobi
 
 export const MobileHeader = () => {
   const { signOut, isGuest } = useAuth();
+  const { isAdmin } = useAdminAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -73,7 +76,7 @@ export const MobileHeader = () => {
     navigate("/");
   };
 
-  const menuItems = [
+  const baseMenuItems = [
     { icon: Home, label: "Dashboard", description: "Overview & analytics" },
     { icon: TrendingUp, label: "Live Trading", description: "Real-time market data", badge: "LIVE" },
     { icon: Bot, label: "AI Agents", description: "Automated trading bots" },
@@ -83,6 +86,10 @@ export const MobileHeader = () => {
     { icon: Star, label: "Watchlist", description: "Tracked assets" },
     { icon: Settings, label: "Settings", description: "App preferences" },
   ];
+
+  const menuItems = isAdmin
+    ? [...baseMenuItems, { icon: Shield, label: "Admin Dashboard", description: "Manage platform", badge: "ADMIN", route: "/admin" }]
+    : baseMenuItems;
 
   return (
     <>
@@ -153,7 +160,12 @@ export const MobileHeader = () => {
                         label={item.label}
                         description={item.description}
                         badge={item.badge}
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          if ('route' in item && item.route) {
+                            navigate(item.route);
+                          }
+                        }}
                       />
                     ))}
                   </div>

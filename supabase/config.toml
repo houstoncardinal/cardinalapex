@@ -14,3 +14,12 @@ verify_jwt = false
 
 [functions.portfolio-rebalance]
 verify_jwt = false
+
+[functions.settle-trades]
+verify_jwt = false
+
+[functions.robot-execute]
+verify_jwt = false
+
+[functions.monitor-alerts]
+verify_jwt = false

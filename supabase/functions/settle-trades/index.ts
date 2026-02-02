@@ -6,13 +6,33 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Simulated price fetcher - in production, use real price APIs
+// Map common symbols to CoinGecko IDs
+const symbolToCoingeckoId: { [key: string]: string } = {
+  'BTC': 'bitcoin',
+  'ETH': 'ethereum',
+  'SOL': 'solana',
+  'DOGE': 'dogecoin',
+  'XRP': 'ripple',
+  'ADA': 'cardano',
+  'AVAX': 'avalanche-2',
+  'DOT': 'polkadot',
+  'MATIC': 'matic-network',
+  'LINK': 'chainlink',
+  'SHIB': 'shiba-inu',
+  'PEPE': 'pepe',
+  'WIF': 'dogwifhat',
+  'BONK': 'bonk'
+};
+
 const fetchCurrentPrice = async (symbol: string, market: string): Promise<number> => {
   try {
     if (market === 'crypto') {
-      const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${symbol.toLowerCase()}&vs_currencies=usd`);
+      const coingeckoId = symbolToCoingeckoId[symbol.toUpperCase()] || symbol.toLowerCase();
+      console.log(`Fetching price for ${symbol} using CoinGecko ID: ${coingeckoId}`);
+      const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coingeckoId}&vs_currencies=usd`);
       const data = await response.json();
-      return data[symbol.toLowerCase()]?.usd || 0;
+      console.log(`CoinGecko response for ${coingeckoId}:`, JSON.stringify(data));
+      return data[coingeckoId]?.usd || 0;
     }
     // For stocks, return simulated price with slight variance
     const basePrice = symbol === 'AAPL' ? 178 : symbol === 'NVDA' ? 487 : symbol === 'TSLA' ? 248 : 100;
